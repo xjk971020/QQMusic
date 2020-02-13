@@ -1,32 +1,36 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div class="music-wrapper">
+    <div class="music-content">
+      <v-menu></v-menu>
+      <v-section></v-section>
     </div>
-    <router-view />
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import VMenu from "@/components/v-menu";
+import VSection from "@/components/v-section"
+
+export default {
+  name: "app",
+  components: {
+    VMenu,
+    VSection
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.music-wrapper {
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.music-content {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
 }
 </style>
