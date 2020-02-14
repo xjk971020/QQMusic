@@ -38,6 +38,7 @@ export default {
     },
     search() {
       if (this.searchContent.trim() === "") {
+        this.$message.info("请输入搜索信息");
         return;
       }
       this.$router.push({

@@ -8,12 +8,96 @@
     <div class="content">
       <div class="sort">
         <ul>
-          <li :class="activeIndex === 1 ? 'active' : ''">歌曲</li>
-          <li :class="activeIndex === 2 ? 'active' : ''">歌手</li>
-          <li :class="activeIndex === 3 ? 'active' : ''">专辑</li>
+          <li
+            :class="queryInfo.catZhida === '0' ? 'active' : ''"
+            @click.prevent="searchSongs()"
+          >
+            歌曲
+          </li>
+          <li
+            :class="queryInfo.catZhida === '2' ? 'active' : ''"
+            @click.prevent="searchSingers()"
+          >
+            歌手
+          </li>
+          <li class="totalNum">
+            <span>总共: {{ this.totalNum }} 首</span>
+          </li>
         </ul>
       </div>
-      <div class="list"></div>
+      <div class="list">
+        <!--搜索的歌曲列表-->
+        <el-table
+          v-if="songsShow"
+          ref="songsTable"
+          height="600px"
+          v-el-table-infinite-scroll="load"
+          v-loading="loading"
+          :element-loading-text="loadingText"
+          element-loading-spinner="el-icon-loading"
+          element-loading-background="rgba(0, 0, 0, 0)"
+          :data="tableData"
+        >
+          <el-table-column
+            prop="name"
+            label="歌曲"
+            width="300"
+          ></el-table-column>
+          <el-table-column label="歌手" width="400">
+            <template slot-scope="scope">
+              <span
+                class="singer-name"
+                v-for="(singer, index) in scope.row.singer"
+                :key="index"
+              >
+                <span v-if="index !== 0"> / </span>
+                <router-link :to="{ path: '/singer/' + singer.mid }">{{
+                  singer.name
+                }}</router-link>
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column label="专辑">
+            <template slot-scope="scope">
+              <span class="album-name">
+                <router-link
+                  :to="{ path: '/album/detail/' + scope.row.album }"
+                  >{{ scope.row.album.name }}</router-link
+                ></span
+              >
+            </template>
+          </el-table-column>
+          <el-table-column label="时长">
+            <template slot-scope="scope">
+              {{ filterTime(scope.row.interval) }}
+            </template>
+          </el-table-column>
+        </el-table>
+        <!--搜索歌手列表-->
+        <div class="singer-list" v-if="singerShow">
+          <el-card v-if="hasSinger">
+            <img :src="singerInfo.singerPic" class="image" />
+            <div>
+              <p>
+                <span class="singer-detail-name">{{
+                  singerInfo.singerName
+                }}</span>
+              </p>
+              <p>
+                <span class="song-info">
+                  {{ "单曲: " + singerInfo.songNum }}
+                </span>
+                <span class="song-info">
+                  {{ "专辑: " + singerInfo.albumNum }}
+                </span>
+              </p>
+            </div>
+          </el-card>
+          <div v-if="!hasSinger">
+            没有歌手信息
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -24,45 +108,109 @@ export default {
   name: "searchResult",
   data() {
     return {
-      songList: [],
-      singerList: [],
-      albumList: [],
-      activeIndex: 1,
+      songsShow: true,
+      singerShow: false,
+      loading: true,
+      loadingText: "",
+      count: 100,
+      tableData: [],
+      totalNum: 0,
+      singerInfo: "",
+      hasSinger: false,
       queryInfo: {
         key: "",
         catZhida: "0",
-        page: "1",
-        limit: "10"
+        page: 1,
+        limit: 20
       }
     };
   },
   created() {
     this.queryInfo.key = this.$route.params.searchContent;
-    this._search();
+    this.loadingText = "拼命加载中..";
   },
   methods: {
+    load() {
+      this.queryInfo.limit = this.queryInfo.limit + 10;
+      if (this.queryInfo.limit > 60) {
+        if (this.queryInfo.catZhida === "0") {
+          this.$refs.songsTable.bodyWrapper.scrollTop = 0;
+        }
+        this.queryInfo.limit = 20;
+        this.queryInfo.page = this.queryInfo.page + 1;
+        this.loadingText = "第" + this.queryInfo.page + "页拼命加载中..";
+      }
+      this._search();
+    },
+    searchSongs() {
+      this.queryInfo.catZhida = "0";
+      this.queryInfo.page = 1;
+      this.queryInfo.limit = 20;
+      this.songsShow = true;
+      this.singerShow = false;
+      this._search();
+    },
+    searchSingers() {
+      this.songsShow = false;
+      this.singerShow = true;
+      this.queryInfo.catZhida = "2";
+      this.queryInfo.page = 1;
+      this.queryInfo.limit = 20;
+      this._search();
+    },
     _search() {
       if (this.queryInfo.key.trim() === "") {
+        this.$message.info("请输入搜索信息");
         return;
       }
+      this.loading = true;
       this.$axios
         .get(searchApi, {
           params: this.queryInfo
         })
         .then(response => {
-          console.log(response);
           if (response.data.response.code === 0) {
-            this.songList = response.data.response.data.song.list;
-            console.log(this.songList);
+            this.tableData = response.data.response.data.song.list;
+            console.log(this.tableData);
+            this.loading = false;
+            this.totalNum = response.data.response.data.song.totalnum;
+            this.singerInfo = response.data.response.data.zhida.zhida_singer;
+            if (this.singerInfo === undefined) {
+              if (this.queryInfo.catZhida === "2") {
+                this.$message.info("查无歌手信息");
+                this.hasSinger = false;
+              }
+              return;
+            }
+            if (this.singerInfo.singerMID !== undefined && this.singerInfo.singerMID != null) {
+              this.hasSinger = true;
+            } else {
+              this.hasSinger = false;
+            }
           } else {
-            alert("error");
+            this.$message.error("error");
           }
         });
+    },
+    filterTime(time) {
+      time = time | 0;
+      let minute = (time / 60) | 0;
+      let second = this._getzero(time % 60);
+      return `${minute}:${second}`;
+    },
+    _getzero(time) {
+      if (parseInt(time) < 10) {
+        time = `0${time}`;
+      }
+      return time;
     }
   },
   filters: {
     addQuotation: function(value) {
       return '"' + value + '"';
+    },
+    deleteLastCharacter: function(value) {
+      return value.substring(0, value.length - 1);
     }
   },
   watch: {
@@ -103,6 +251,7 @@ export default {
         margin-right: 25px;
         float: left;
         font-weight: 500;
+        font-size: 13px;
       }
       li:hover {
         color: #31c27c;
@@ -112,6 +261,73 @@ export default {
         color: #31c27c;
         padding-bottom: 4px;
         border-bottom: 3px solid #31c27c;
+      }
+      .totalNum {
+        color: #a0dfa4;
+        float: right;
+      }
+      .totalNum:hover {
+        color: #a0dfa4;
+        cursor: Auto;
+      }
+    }
+    .list {
+      .el-table {
+        padding-left: 20px;
+        padding-top: 20px;
+        font-weight: 600;
+        a {
+          text-decoration: none;
+          color: black;
+        }
+        .singer-name {
+          display: inline-block;
+        }
+        a:hover {
+          color: #31c27c;
+          cursor: pointer;
+        }
+        .album-name:hover {
+          color: #31c27c;
+          cursor: pointer;
+        }
+      }
+      .singer-list {
+        position: relative;
+        left: 20px;
+        top: 20px;
+        width: 96%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .el-card {
+          width: 200px;
+          height: 250px;
+          text-align: center;
+          p {
+            margin-top: 10px;
+            margin-bottom: 8px;
+          }
+          p:nth-child(2) {
+            margin-top: 0px;
+          }
+          .image {
+            border-radius: 50%;
+            width: 100%;
+            display: block;
+          }
+          .singer-detail-name {
+            font-size: 14px;
+            cursor: pointer;
+          }
+          .singer-detail-name:hover {
+            color: #31c27c;
+          }
+          .song-info {
+            font-size: 12px;
+            color: #b4b4b4;
+          }
+        }
       }
     }
   }
