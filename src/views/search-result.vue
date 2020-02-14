@@ -20,7 +20,7 @@
           >
             歌手
           </li>
-          <li class="totalNum">
+          <li v-if="songsShow" class="totalNum">
             <span>总共: {{ this.totalNum }} 首</span>
           </li>
         </ul>
@@ -75,24 +75,26 @@
         </el-table>
         <!--搜索歌手列表-->
         <div class="singer-list" v-if="singerShow">
-          <el-card v-if="hasSinger">
-            <img :src="singerInfo.singerPic" class="image" />
-            <div>
-              <p>
-                <span class="singer-detail-name">{{
-                  singerInfo.singerName
-                }}</span>
-              </p>
-              <p>
-                <span class="song-info">
-                  {{ "单曲: " + singerInfo.songNum }}
-                </span>
-                <span class="song-info">
-                  {{ "专辑: " + singerInfo.albumNum }}
-                </span>
-              </p>
-            </div>
-          </el-card>
+          <router-link :to="'/singer/' + singerInfo.singerMID">
+            <el-card v-if="hasSinger">
+              <img :src="singerInfo.singerPic" class="image" />
+              <div>
+                <p>
+                  <span class="singer-detail-name">{{
+                    singerInfo.singerName
+                  }}</span>
+                </p>
+                <p>
+                  <span class="song-info">
+                    {{ "单曲: " + singerInfo.songNum }}
+                  </span>
+                  <span class="song-info">
+                    {{ "专辑: " + singerInfo.albumNum }}
+                  </span>
+                </p>
+              </div>
+            </el-card>
+          </router-link>
           <div v-if="!hasSinger">
             没有歌手信息
           </div>
@@ -182,7 +184,10 @@ export default {
               }
               return;
             }
-            if (this.singerInfo.singerMID !== undefined && this.singerInfo.singerMID != null) {
+            if (
+              this.singerInfo.singerMID !== undefined &&
+              this.singerInfo.singerMID != null
+            ) {
               this.hasSinger = true;
             } else {
               this.hasSinger = false;
@@ -300,6 +305,9 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        a {
+          text-decoration: none;
+        }
         .el-card {
           width: 200px;
           height: 250px;
