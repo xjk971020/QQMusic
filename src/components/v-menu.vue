@@ -3,7 +3,11 @@
     <img src="../assets/images/music-logo.png" alt="logo" />
     <div class="nav-wrap">
       <div>
-        <v-nav :navTitle="navTitle" :musicHall="musicHall" :myMusic="myMusic"></v-nav>
+        <v-nav
+          :navTitle="navTitle"
+          :musicHall="musicHall"
+          :myMusic="myMusic"
+        ></v-nav>
       </div>
     </div>
   </div>

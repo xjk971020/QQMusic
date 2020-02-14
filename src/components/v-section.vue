@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-<!--      <div class="searchConfig"></div>-->
+    <!--      <div class="searchConfig"></div>-->
     <v-header></v-header>
     <router-view></router-view>
   </div>

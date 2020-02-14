@@ -7,7 +7,12 @@
       <i class="iconfont icon-next"></i>
     </div>
     <div class="pull-left">
-      <input v-model="searchContent" type="text" class="search-input iconfont" placeholder="搜索音乐" />
+      <input
+        v-model="searchContent"
+        type="text"
+        class="search-input iconfont"
+        placeholder="搜索音乐"
+      />
       <button class="search-btn" @click="search()">
         <i class="iconfont icon-suosou"></i>
       </button>

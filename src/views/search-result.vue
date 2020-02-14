@@ -13,9 +13,7 @@
           <li :class="activeIndex === 3 ? 'active' : ''">专辑</li>
         </ul>
       </div>
-      <div class="list">
-
-      </div>
+      <div class="list"></div>
     </div>
   </div>
 </template>

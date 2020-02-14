@@ -3,11 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-import "@/assets/scss/index.scss"
+import "@/assets/scss/index.scss";
 
 import axios from "axios";
 import VIscroll from "viscroll";
 import Lazyload from "vue-lazyload";
+import "./plugins/element.js";
 
 axios.defaults.baseURL = "http://127.0.0.1:3200/";
 Vue.prototype.$axios = axios;
