@@ -336,6 +336,11 @@ export default {
             color: #b4b4b4;
           }
         }
+        .el-card:hover {
+          transform: translateY(-5px);
+          transition: all 0.5s;
+          background-color: rgba(122,122,122,0.3);
+        }
       }
     }
   }
