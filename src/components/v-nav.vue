@@ -58,7 +58,8 @@ export default {
     padding: 0;
     margin: 0;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     li {
       width: 100%;
       margin: 10px 0px;
@@ -82,7 +83,7 @@ export default {
       padding-left: 10px;
     }
     .router-link-active {
-      background-color: #31c27c;
+      background-color: $select-bg-color;
       border-radius: $border-radius-base;
     }
   }

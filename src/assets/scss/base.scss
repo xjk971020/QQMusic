@@ -53,6 +53,15 @@ body {
   background-color: #eeeeee; /*滚动条的背景颜色*/
 }
 
+//轮播图指示器样式
+.el-carousel__button {
+  height: 10px !important;
+  width: 10px !important;
+  border-radius: 350% !important;
+}
 
+.el-carousel__indicator:hover .el-carousel__button{
+  background-color: $select-bg-color;
+}
 
 

@@ -7,7 +7,10 @@ import {
   TableColumn,
   InfiniteScroll,
   Loading,
-  Card
+  Card,
+  Carousel,
+  CarouselItem,
+  Tooltip
 } from "element-ui";
 import elTableInfiniteScroll from "el-table-infinite-scroll";
 
@@ -17,7 +20,10 @@ Vue.use(TableColumn);
 Vue.use(InfiniteScroll);
 Vue.use(Loading);
 Vue.use(Card);
+Vue.use(Carousel);
+Vue.use(CarouselItem);
 Vue.use(elTableInfiniteScroll);
+Vue.use(Tooltip);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;

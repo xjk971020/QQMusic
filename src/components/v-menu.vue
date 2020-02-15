@@ -24,7 +24,7 @@ export default {
     this.navTitle = ["音乐馆", "我的音乐"];
     this.musicHall = [
       {
-        link: "/selected",
+        link: "/recommend",
         name: "精选",
         iconName: "icon-selected"
       },
@@ -48,7 +48,12 @@ export default {
       {
         link: "history",
         name: "播放历史",
-        iconName: "icon-singer"
+        iconName: "icon-sheet"
+      },
+      {
+        link: "like",
+        name: "我的收藏",
+        iconName: "icon-sheet"
       }
     ];
   }
@@ -60,7 +65,7 @@ export default {
 .menu {
   background-color: #f0f0f0;
   height: 100%;
-  width: $menu-width;
+  width: 220px;
   position: relative;
   float: left;
   img {

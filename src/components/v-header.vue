@@ -57,7 +57,7 @@ export default {
 .header {
   padding-left: 20px;
   padding-top: 10px;
-  height: 50px;
+  height: 8%;
   .history-btn {
     margin-right: $module-margin;
     height: 30px;
@@ -82,7 +82,7 @@ export default {
     outline: 0;
   }
   .search-btn:hover {
-    color: #31c27c;
+    color: $select-bg-color;
   }
   .clear {
     clear: both;

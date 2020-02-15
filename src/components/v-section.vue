@@ -1,8 +1,9 @@
 <template>
   <div class="section">
-    <!--      <div class="searchConfig"></div>-->
     <v-header></v-header>
-    <router-view></router-view>
+    <transition mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -22,5 +23,14 @@ export default {
   position: relative;
   margin-left: $menu-width;
   height: 100%;
+}
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+  transform: translateX(200px);
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.4s ease-in-out;
 }
 </style>

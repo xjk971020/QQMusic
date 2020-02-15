@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Selected from "@/components/v-selected";
+import Recommend from "@/views/recommend";
 import SearchResult from "@/views/search-result";
 
 Vue.use(VueRouter);
@@ -9,12 +9,12 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/selected"
+    redirect: "/recommend"
   },
   {
-    path: "/selected",
-    name: "selected",
-    component: Selected
+    path: "/recommend",
+    name: "Recommend",
+    component: Recommend
   },
   {
     path: "/search/:searchContent",
