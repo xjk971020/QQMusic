@@ -36,13 +36,34 @@
           :element-loading-text="loadingText"
           element-loading-spinner="el-icon-loading"
           element-loading-background="rgba(0, 0, 0, 0)"
+          @row-dblclick="play"
           :data="tableData"
         >
-          <el-table-column
-            prop="name"
-            label="歌曲"
-            width="300"
-          ></el-table-column>
+          <el-table-column label="歌曲" width="300">
+            <template slot-scope="scope">
+              <span class="song-name">
+                {{ scope.row.name }}
+              </span>
+              <div class="now-play">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="播放"
+                  placement="top-start"
+                >
+                  <i class="iconfont el-icon-video-play"></i>
+                </el-tooltip>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="添加收藏"
+                  placement="top-start"
+                >
+                  <i class="iconfont el-icon-circle-plus-outline"></i>
+                </el-tooltip>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column label="歌手" width="400">
             <template slot-scope="scope">
               <span
@@ -112,6 +133,7 @@ export default {
     return {
       songsShow: true,
       singerShow: false,
+      showPlayBtn: true,
       loading: true,
       loadingText: "",
       count: 100,
@@ -166,6 +188,8 @@ export default {
         return;
       }
       this.loading = true;
+      this.queryInfo.page = 1;
+      this.queryInfo.limit = 20;
       this.$axios
         .get(searchApi, {
           params: this.queryInfo
@@ -173,7 +197,6 @@ export default {
         .then(response => {
           if (response.data.response.code === 0) {
             this.tableData = response.data.response.data.song.list;
-            console.log(this.tableData);
             this.loading = false;
             this.totalNum = response.data.response.data.song.totalnum;
             this.singerInfo = response.data.response.data.zhida.zhida_singer;
@@ -208,6 +231,12 @@ export default {
         time = `0${time}`;
       }
       return time;
+    },
+    play(row, column, event) {
+      console.log(row);
+      console.log(column);
+      console.log(event);
+      console.log("播放歌曲");
     }
   },
   filters: {
@@ -228,8 +257,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/variable";
 .search {
-  height: 709px;
+  height: 91%;
   position: relative;
   top: -15px;
   .searchContent {
@@ -259,13 +289,13 @@ export default {
         font-size: 13px;
       }
       li:hover {
-        color: #31c27c;
+        color: $select-bg-color;
         cursor: pointer;
       }
       .active {
-        color: #31c27c;
+        color: $select-bg-color;
         padding-bottom: 4px;
-        border-bottom: 3px solid #31c27c;
+        border-bottom: 3px solid $select-bg-color;
       }
       .totalNum {
         color: #a0dfa4;
@@ -280,20 +310,39 @@ export default {
       .el-table {
         padding-left: 20px;
         padding-top: 20px;
-        font-weight: 600;
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
         a {
           text-decoration: none;
           color: black;
+        }
+        .song-name {
+          cursor: pointer;
+        }
+        .now-play {
+          border-radius: 2px;
+          color: grey;
+          float: right;
+          padding: 2px 6px;
+          cursor: pointer;
+          display: none;
+          i {
+            font-size: 16px;
+            margin-right: 5px;
+          }
+        }
+        tr:hover .now-play {
+          display: block;
         }
         .singer-name {
           display: inline-block;
         }
         a:hover {
-          color: #31c27c;
+          color: $select-bg-color;
           cursor: pointer;
         }
         .album-name:hover {
-          color: #31c27c;
+          color: $select-bg-color;
           cursor: pointer;
         }
       }
@@ -329,7 +378,7 @@ export default {
             cursor: pointer;
           }
           .singer-detail-name:hover {
-            color: #31c27c;
+            color: $select-bg-color;
           }
           .song-info {
             font-size: 12px;
@@ -339,7 +388,7 @@ export default {
         .el-card:hover {
           transform: translateY(-5px);
           transition: all 0.5s;
-          background-color: rgba(122,122,122,0.3);
+          background-color: rgba(122, 122, 122, 0.3);
         }
       }
     }
