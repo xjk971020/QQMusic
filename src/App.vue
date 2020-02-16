@@ -3,6 +3,7 @@
     <div class="music-content">
       <v-menu></v-menu>
       <v-section></v-section>
+      <v-player></v-player>
     </div>
   </div>
 </template>
@@ -10,11 +11,13 @@
 <script>
 import VMenu from "@/components/v-menu";
 import VSection from "@/components/v-section";
+import VPlayer from "@/components/v-player";
 export default {
   name: "app",
   components: {
     VMenu,
-    VSection
+    VSection,
+    VPlayer
   }
 };
 </script>

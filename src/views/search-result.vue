@@ -51,7 +51,7 @@
                   content="播放"
                   placement="top-start"
                 >
-                  <i class="iconfont el-icon-video-play"></i>
+                  <i class="iconfont el-icon-video-play" @click="playMusic(scope.row)"></i>
                 </el-tooltip>
                 <el-tooltip
                   class="item"
@@ -141,6 +141,7 @@ export default {
       totalNum: 0,
       singerInfo: "",
       hasSinger: false,
+      scrollTop: 0,
       queryInfo: {
         key: "",
         catZhida: "0",
@@ -188,8 +189,6 @@ export default {
         return;
       }
       this.loading = true;
-      this.queryInfo.page = 1;
-      this.queryInfo.limit = 20;
       this.$axios
         .get(searchApi, {
           params: this.queryInfo
@@ -237,6 +236,9 @@ export default {
       console.log(column);
       console.log(event);
       console.log("播放歌曲");
+    },
+    playMusic(row) {
+      console.log(row);
     }
   },
   filters: {
@@ -275,7 +277,6 @@ export default {
       font-weight: bold;
     }
   }
-
   .content {
     .sort {
       ul {
@@ -344,6 +345,12 @@ export default {
         .album-name:hover {
           color: $select-bg-color;
           cursor: pointer;
+        }
+        .el-icon-video-play:hover {
+          color: $select-bg-color;
+        }
+        .el-icon-circle-plus-outline:hover {
+          color: $select-bg-color;
         }
       }
       .singer-list {
