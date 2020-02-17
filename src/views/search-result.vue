@@ -51,7 +51,10 @@
                   content="播放"
                   placement="top-start"
                 >
-                  <i class="iconfont el-icon-video-play" @click="playMusic(scope.row)"></i>
+                  <i
+                    class="iconfont el-icon-video-play"
+                    @click="playMusic(scope.row)"
+                  ></i>
                 </el-tooltip>
                 <el-tooltip
                   class="item"
@@ -127,6 +130,7 @@
 
 <script>
 import searchApi from "@/api/search";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "searchResult",
   data() {
@@ -231,15 +235,17 @@ export default {
       }
       return time;
     },
-    play(row, column, event) {
-      console.log(row);
-      console.log(column);
-      console.log(event);
-      console.log("播放歌曲");
+    play(row) {
+      this.selectPlay({
+        list: row,
+        index: 0
+      });
     },
     playMusic(row) {
-      console.log(row);
-    }
+      this.play(row);
+    },
+    ...mapActions(["selectPlay"]),
+    ...mapMutations(["SET_PLAYING_STATE"])
   },
   filters: {
     addQuotation: function(value) {

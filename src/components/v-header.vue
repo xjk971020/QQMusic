@@ -12,6 +12,7 @@
         type="text"
         class="search-input iconfont"
         placeholder="搜索音乐"
+        @keyup.enter="() => search()"
       />
       <button class="search-btn" @click="search()">
         <i class="iconfont icon-suosou"></i>

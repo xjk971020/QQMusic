@@ -25,6 +25,9 @@ export default {
       }
     }
   },
+  created() {
+    console.log(this.recommendNewSongInfo);
+  },
   methods: {
     prev() {},
     next() {}
