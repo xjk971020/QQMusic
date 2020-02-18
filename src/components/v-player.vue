@@ -28,21 +28,97 @@
           <i class="iconfont" :class="playMode"></i>
         </div>
         <div @click="prev" class="pull-left prev-song" :class="disableCls">
-          <i class="iconfont icon-prev-song" ></i>
+          <i class="iconfont icon-prev-song"></i>
         </div>
         <div
           class="pull-left play-song"
           :class="disablePlaySong"
           @click="togglePlay"
         >
-          <i class="iconfont" :class="playIcon" > </i>
+          <i class="iconfont" :class="playIcon"> </i>
         </div>
         <div @click="next" class="pull-left next-song" :class="disableCls">
           <i class="iconfont icon-next-song"></i>
         </div>
       </div>
     </div>
-    <audio ref="audio" @canplay="ready" @timeupdate="timeUpdate"></audio>
+    <!--    歌词占满屏幕的div-->
+    <div
+      class="spread-player"
+      v-if="!isNull"
+      :class="{ 'spread-player-up': fullScreen }"
+      :style="{ height: spreadHeight }"
+    >
+      <!--      图片背景-->
+      <div
+        class="background"
+        :class="background"
+        :style="{ 'background-image': 'url(' + thrumUrl + ')' }"
+      ></div>
+      <!-- 回退按钮-->
+      <div class="back" @click="fullScreenToggle">
+        <i class="iconfont icon-prev"></i>
+      </div>
+      <!-- 右侧的播放信息-->
+      <div class="player-content">
+        <div class="player-bd">
+          <div class="player-mod">
+            <div
+              class="mod-thrum"
+              :style="{ 'background-image': 'url(' + thrumUrl + ')' }"
+            ></div>
+            <div class="name">{{ currentSong.name }}</div>
+            <div class="info">
+              <span>歌手:</span>
+              <span v-for="(singer, index) in currentSong.singer" :key="index">
+                <span v-if="index != 0"> /</span>
+                <span
+                  ><router-link
+                    :to="{ path: '/singer/' + currentSong.singer[index].mid }"
+                  >
+                    {{ currentSong.singer[index].name }}
+                  </router-link></span
+                >
+              </span>
+              <span class="album-name">专辑:</span>
+              <span
+                ><router-link
+                  :to="{ path: '/album/detail/' + currentSong.album.mid }"
+                  >{{ currentSong.album.name }}</router-link
+                ></span
+              >
+            </div>
+            <!-- 歌词信息-->
+            <div class="lyric-wrap" v-if="currentLyric">
+              <div class="lyric-box">
+                <div
+                  class="lyric-info"
+                  ref="lyricInfo"
+                  v-if="currentLyric.lines.length > 0"
+                >
+                  <p
+                    v-for="(item, index) in currentLyric.lines"
+                    :key="index"
+                    ref="line"
+                    :class="{ on: currentLineNum === index }"
+                    v-html="item.txt"
+                  ></p>
+                </div>
+                <div class="lyric-info lyric-default" ref="lyricInfo" v-else>
+                  此歌曲为没有填词的纯音乐
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <audio
+      ref="audio"
+      @canplay="ready"
+      @end="end"
+      @timeupdate="timeUpdate"
+    ></audio>
   </div>
 </template>
 
@@ -50,6 +126,7 @@
 import { mapGetters, mapMutations } from "vuex";
 import { mode } from "@/util/config";
 import { shuffle } from "@/util/util";
+import { prefix } from "@/util/dom";
 import VKeyApi from "@/api/VKey";
 import LyricApi from "@/api/GetLyric";
 import defaultThrum from "./../assets/images/lazyloading.png";
@@ -59,7 +136,8 @@ export default {
   name: "VPlayer",
   data() {
     return {
-      songReady: true,
+      spreadHeight: 0,
+      songReady: false,
       thrumUrl: "",
       currentTime: 0,
       currentLyric: null,
@@ -72,6 +150,10 @@ export default {
   },
   created() {
     this.thrumUrl = defaultThrum;
+    this.spreadHeight = document.body.clientHeight + "px";
+    window.addEventListener("resize", () => {
+      this.spreadHeight = document.body.clientHeight + "px";
+    });
   },
   methods: {
     ...mapMutations([
@@ -80,15 +162,82 @@ export default {
       "SET_PLAYING_STATE",
       "SET_CURRENT_INDEX",
       "SET_MODE",
-      "SET_PLAY_LIST"
+      "SET_PLAY_LIST",
+      "ADD_HISTORY_SONG",
+      "ADD_SEQUENCE_SONG"
     ]),
     ready() {
       this.songReady = true;
     },
     // 点击播放上一首歌曲
-    prev() {},
+    prev() {
+      if (!this.songReady) {
+        return;
+      }
+      if (this.mode === mode.loop || this.playList.length === 1) {
+        this.loop();
+        if (!this.playing) {
+          this.togglePlay();
+        }
+        if (this.currentLyric) {
+          this.currentLyric.seek(0);
+        }
+        return;
+      }
+      let index = this.currentIndex - 1;
+      if (index === -1) {
+        index = this.sequenceList.length - 1;
+      }
+      this.SET_CURRENT_INDEX(index);
+      if (!this.playing) {
+        this.togglePlay();
+      }
+      this.songReady = false;
+    },
     // 点击播放下一首歌曲
-    next() {},
+    next() {
+      if (!this.songReady) {
+        return;
+      }
+
+      if (this.mode === mode.loop || this.sequenceList.length === 1) {
+        this.loop();
+        if (!this.playing) {
+          this.togglePlay();
+        }
+        if (this.currentLyric) {
+          this.currentLyric.seek(0);
+        }
+        return;
+      }
+      let index = this.currentIndex + 1;
+      if (index === this.sequenceList.length) {
+        index = 0;
+      }
+      console.log("next")
+      this.SET_CURRENT_INDEX(index);
+      console.log(index);
+      if (!this.playing) {
+        this.togglePlay();
+      }
+      this.songReady = false;
+    },
+    // 播放模式中的单曲循环
+    loop() {
+      this.$refs.audio.currentTime = 0;
+      this.$refs.audio.play();
+      if (this.currentLyric) {
+        this.currentLyric.seek(0);
+      }
+    },
+    // 当前歌曲播放完进行下一首歌曲的播放
+    end() {
+      if (this.mode === mode.loop) {
+        this.loop();
+      } else {
+        this.next();
+      }
+    },
     // 改变播放模式
     changeMode() {
       if (this.isNull) {
@@ -96,17 +245,29 @@ export default {
       }
       let playmode = (this.mode + 1) % 3;
       this.SET_MODE(playmode);
-      let list = [];
       if (playmode === mode.random) {
-        list = shuffle(this.sequenceList);
-      } else {
-        list = this.sequenceList;
+        shuffle(this.sequenceList);
       }
-      // this._setCurrentIndex(list);
-      this.SET_SEQUENCE_LIST(list);
+      this._setCurrentIndex();
+    },
+    _setCurrentIndex() {
+      console.log("serindex")
+      for (let i = 0; i < this.sequenceList.length; ++i) {
+        if (
+          this.sequenceList[i].mid != null &&
+          this.sequenceList[i].mid === this.currentSong.mid
+        ) {
+          this.SET_CURRENT_INDEX(i);
+          return;
+        }
+      }
     },
     // 点击全屏显示事件
-    fullScreenToggle() {},
+    fullScreenToggle() {
+      if (!this.isNull) {
+        this.SET_FULL_SCREEN_STATE(!this.fullScreen);
+      }
+    },
     // 过滤歌曲播放时间
     filterTime(time) {
       time = time | 0;
@@ -120,9 +281,24 @@ export default {
       }
       return time;
     },
+    _resetLyricOffset() {
+      prefix(this.$refs.lyricInfo, "0.68s", "TransitionDuration");
+    },
     // 歌词滚动播放的监听事件
-    _lyricPlay() {
-      return "1";
+    _lyricPlay({ lineNum }) {
+      if (!this.$refs.lyricInfo) {
+        return;
+      }
+      this.currentLineNum = lineNum;
+      if (lineNum > 0) {
+        let lineEl = this.$refs.line[lineNum];
+        this.currentLineOffsetY = lineEl.offsetTop - 200;
+        prefix(
+          this.$refs.lyricInfo,
+          `translate(0px, ${-this.currentLineOffsetY}px)`
+        );
+        this._resetLyricOffset();
+      }
     },
     // 监听audio标签监听的事件
     timeUpdate(e) {
@@ -132,7 +308,11 @@ export default {
     onupplay(percent) {
       let currentTime = percent * this.currentSong.interval;
       this.currentTime = this.$refs.audio.currentTime = currentTime;
+      if (this.currentLyric) {
+        this.currentLyric.seek(currentTime * 1000);
+      }
     },
+    // 点击播放发按钮
     togglePlay() {
       if (!this.songReady) {
         return;
@@ -179,6 +359,10 @@ export default {
     // 当前歌曲播放到的时间进度
     percent() {
       return this.currentTime / this.currentSong.interval;
+    },
+    // 监控是否全屏歌词界面
+    background() {
+      return this.fullScreen ? "spread-bg" : "";
     }
   },
   watch: {
@@ -205,6 +389,10 @@ export default {
           const url = response.data.response.playLists[0];
           if (url === "http://ws.stream.qqmusic.qq.com/") {
             this.$message.error("音源获取失败(或许收听该歌曲需要vip)");
+          } else {
+            // 将可获取音源的歌曲加入历史歌单中
+            // this.ADD_HISTORY_SONG(newSong);
+            this.ADD_SEQUENCE_SONG(newSong);
           }
           this.$refs.audio.src = url;
           this.$refs.audio.play();
@@ -215,7 +403,6 @@ export default {
             .then(response => {
               let lyric = response.data.response.lyric;
               this.currentLyric = new Lyric(lyric, this._lyricPlay);
-              // console.log(lyric);
               if (this.playing) {
                 this.currentLyric.play();
               }
@@ -246,6 +433,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/mixin";
 @import "~@/assets/scss/variable";
 .player {
   position: fixed;
@@ -258,13 +446,12 @@ export default {
   .mini-player {
     height: 100%;
     width: 100%;
-    z-index: 20;
+    z-index: 999;
     .play-config {
-      position: relative;
-      top: 3px;
-      left: 25%;
+      position: absolute;
+      top: 27px;
+      left: 40%;
       height: 100%;
-      padding: 8px 5px;
     }
     .play-song {
       margin-left: 4px;
@@ -274,7 +461,6 @@ export default {
       border-radius: 50%;
       height: 35px !important;
       width: 35px !important;
-      z-index: 30;
       position: relative;
       top: -6px;
       line-height: 35px;
@@ -330,6 +516,7 @@ export default {
       color: #ccc;
     }
     .disablePlay {
+      background-color: #ccc;
       color: #ccc;
       border: 1px #ccc solid;
     }
@@ -360,6 +547,151 @@ export default {
         }
       }
     }
+  }
+  .spread-player {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    margin: 0 auto;
+    transition: all 0.3s ease-out;
+    transform: translateY(100%);
+    background-color: $black;
+    color: $white;
+    /*点击全屏后Y轴偏移为0*/
+    &.spread-player-up {
+      transform: translateY(0);
+    }
+    .back {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 50;
+      padding: $module-padding;
+      transform: rotate(-90deg);
+      cursor: pointer;
+      color: $white;
+      &:hover {
+        color: $select-bg-color;
+      }
+    }
+    .background {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: 50%;
+      filter: blur(65px);
+      opacity: 0.6;
+      &.spread-bg {
+        background-size: cover;
+      }
+    }
+    .player-content {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      margin: 0 13%;
+    }
+    .player-bd {
+      position: absolute;
+      top: 18%;
+      bottom: 18%;
+      width: 100%;
+      min-height: 408px;
+    }
+    .player-mod {
+      margin-left: 500px;
+      height: 100%;
+      color: rgba(255, 255, 255, 0.4);
+      .mod-thrum {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 336.65px;
+        height: 336.65px;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .name {
+        height: 24px;
+        @include text-overflow;
+        font-size: 24px;
+        color: $white;
+        position: relative;
+        top: -30px;
+      }
+      .info {
+        margin-top: $module-margin;
+        position: relative;
+        top: -30px;
+        font-size: 18px;
+        .album-name {
+          margin-left: 30px;
+        }
+        a {
+          display: inline-block;
+          max-width: 40%;
+          height: 24px;
+          line-height: 24px;
+          @include text-overflow;
+          text-decoration: none;
+          transition: all 0.18s ease-out;
+          color: rgba(255, 255, 255, 0.4);
+          &:first-child {
+            margin-left: 5px;
+          }
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+      .lyric-wrap {
+        position: absolute;
+        left: 0;
+        top: 75px;
+        bottom: 60px;
+        width: 100%;
+        overflow: hidden;
+        mask-image: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0) 0,
+          rgba(255, 255, 255, 0.6) 15%,
+          rgba(255, 255, 255, 1) 25%,
+          rgba(255, 255, 255, 1) 75%,
+          rgba(255, 255, 255, 1) 85%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        p {
+          margin: 0;
+          line-height: 34px;
+          color: $white;
+          &.on {
+            transition: all 0.18s ease-out;
+            color: $select-bg-color;
+          }
+        }
+      }
+      .lyric-box {
+        position: absolute;
+        left: 500px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+  .lyric-default {
+    position: relative;
+    top: 150px;
   }
 }
 </style>

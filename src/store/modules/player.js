@@ -6,8 +6,14 @@ const state = {
   isNull: true,
   playing: false,
   fullScreen: false,
+  // 播放歌曲时, 记录的播放历史记录，当播放模式改变时，改变的是这个列表的顺序
   sequenceList: [],
+  // 精选点击播放歌单时, 播放的歌单
   playList: [],
+  // 播放历史的歌曲列表
+  historyList: [],
+  // 添加收藏的歌曲列表
+  favouriteList: [],
   mode: mode.sequence,
   currentIndex: -1
 };
@@ -16,10 +22,10 @@ const getters = {
   isNull: state => state.isNull,
   playing: state => state.playing,
   fullScreen: state => state.fullScreen,
-  // 播放歌曲时, 记录的播放历史记录
   sequenceList: state => state.sequenceList,
-  // 精选点击播放歌单时, 播放的歌单
   playList: state => state.playList,
+  historyList: state => state.historyList,
+  favouriteList: state => state.favouriteList,
   mode: state => state.mode,
   currentIndex: state => state.currentIndex,
   // 顺序播放的当前歌曲
@@ -42,10 +48,47 @@ const mutations = {
     state.sequenceList = list;
   },
   [types.ADD_SEQUENCE_SONG](state, list) {
+    if (state.sequenceList.length > 0) {
+      let songIndex = state.sequenceList.findIndex(item => {
+        return item.mid === list.mid;
+      });
+      // 如果存在已经添加过的歌曲，则删去原来的元素，添加到首位
+      if (songIndex >= 0) {
+        state.sequenceList.splice(songIndex, 1);
+      }
+    }
     state.sequenceList.unshift(list);
+    console.log("sequenceList:");
+    state.sequenceList.forEach(item => {
+      console.log(item.name);
+    });
   },
   [types.SET_PLAY_LIST](state, list) {
     state.playList = list;
+  },
+  [types.ADD_HISTORY_SONG](state, list) {
+    // if (state.historyList.length > 0) {
+    //   let songIndex = state.historyList.findIndex(item => {
+    //     return item.mid === list.mid;
+    //   });
+    //   // 如果存在已经添加过的歌曲，则删去原来的元素，添加到首位
+    //   if (songIndex >= 0) {
+    //     state.historyList.splice(songIndex, 1);
+    //   }
+    // }
+    // state.historyList.unshift(list);
+    // console.log("historyList:");
+    // state.historyList.forEach(item => {
+    //   console.log(item.name);
+    // });
+    if(state) {
+      return state;
+    } else  {
+      return list;
+    }
+  },
+  [types.ADD_FAVOURITE_SONG](state, list) {
+    state.favouriteList.unshift(list);
   },
   [types.SET_MODE](state, mode) {
     state.mode = mode;
@@ -64,7 +107,7 @@ const actions = {
       let randomList = shuffle(state.sequenceList);
       commit(types.SET_SEQUENCE_LIST, randomList);
       index = randomList.findIndex(item => {
-        return item[index].mid === list.mid;
+        return item.mid === list.mid;
       });
     }
     commit(types.SET_CURRENT_INDEX, index);
