@@ -29,7 +29,7 @@ export default {
         iconName: "icon-selected"
       },
       {
-        link: "/rank",
+        link: "/topList",
         name: "排行",
         iconName: "icon-rank"
       },
