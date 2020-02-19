@@ -30,7 +30,7 @@ const getters = {
   currentIndex: state => state.currentIndex,
   // 顺序播放的当前歌曲
   currentSong: state => {
-    return state.sequenceList[state.currentIndex] || {};
+    return state.playList[state.currentIndex] || {};
   }
 };
 
@@ -60,7 +60,7 @@ const mutations = {
     state.sequenceList.unshift(list);
     console.log("sequenceList:");
     state.sequenceList.forEach(item => {
-      console.log(item.name);
+      console.log(item.singer[0].name);
     });
   },
   [types.SET_PLAY_LIST](state, list) {
@@ -105,10 +105,12 @@ const actions = {
     commit(types.ADD_SEQUENCE_SONG, list);
     if (state.mode === mode.random) {
       let randomList = shuffle(state.sequenceList);
-      commit(types.SET_SEQUENCE_LIST, randomList);
+      commit(types.SET_PLAY_LIST, randomList);
       index = randomList.findIndex(item => {
         return item.mid === list.mid;
       });
+    } else {
+      commit(types.SET_PLAY_LIST, state.sequenceList);
     }
     commit(types.SET_CURRENT_INDEX, index);
   }

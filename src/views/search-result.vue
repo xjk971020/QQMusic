@@ -314,7 +314,11 @@ export default {
       }
     }
     .list {
+      table::before {
+        z-index: 0;
+      }
       .el-table {
+        height: 550px;
         padding-left: 20px;
         padding-top: 20px;
         font-family: "Helvetica Neue", Helvetica, "PingFang SC",

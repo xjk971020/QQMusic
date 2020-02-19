@@ -90,7 +90,7 @@
             </div>
             <!-- 歌词信息-->
             <div class="lyric-wrap" v-if="currentLyric">
-              <div class="lyric-box">
+              <div class="lyric-box" v-iscroll="getIscroll">
                 <div
                   class="lyric-info"
                   ref="lyricInfo"
@@ -116,7 +116,7 @@
     <audio
       ref="audio"
       @canplay="ready"
-      @end="end"
+      @ended="end"
       @timeupdate="timeUpdate"
     ></audio>
   </div>
@@ -159,13 +159,26 @@ export default {
     ...mapMutations([
       "SET_ISNULL_STATE",
       "SET_FULL_SCREEN_STATE",
+      "SET_SEQUENCE_LIST",
       "SET_PLAYING_STATE",
+      "SET_PLAY_LIST",
       "SET_CURRENT_INDEX",
       "SET_MODE",
       "SET_PLAY_LIST",
       "ADD_HISTORY_SONG",
       "ADD_SEQUENCE_SONG"
     ]),
+    getIscroll (iscroll) {
+      this._resetLyricOffset()
+      if (this.currentLyric.lines.length === 0) {
+        prefix(this.$refs.lyricInfo, 'translate(0px, 0px)')
+      } else {
+        prefix(this.$refs.lyricInfo, 'translate(0px, 200px)')
+      }
+      iscroll.on('scrollStart', () => {
+        iscroll.y = -this.currentLineOffsetY
+      })
+    },
     ready() {
       this.songReady = true;
     },
@@ -214,9 +227,7 @@ export default {
       if (index === this.sequenceList.length) {
         index = 0;
       }
-      console.log("next")
       this.SET_CURRENT_INDEX(index);
-      console.log(index);
       if (!this.playing) {
         this.togglePlay();
       }
@@ -245,22 +256,20 @@ export default {
       }
       let playmode = (this.mode + 1) % 3;
       this.SET_MODE(playmode);
+      let list = [];
       if (playmode === mode.random) {
-        shuffle(this.sequenceList);
+        list = shuffle(this.sequenceList);
+      } else {
+        list = this.sequenceList;
       }
-      this._setCurrentIndex();
+      this._setCurrentIndex(list);
+      this.SET_PLAY_LIST(list);
     },
-    _setCurrentIndex() {
-      console.log("serindex")
-      for (let i = 0; i < this.sequenceList.length; ++i) {
-        if (
-          this.sequenceList[i].mid != null &&
-          this.sequenceList[i].mid === this.currentSong.mid
-        ) {
-          this.SET_CURRENT_INDEX(i);
-          return;
-        }
-      }
+    _setCurrentIndex(list) {
+      let index = list.findIndex(item => {
+        return item.mid === this.currentSong.mid;
+      });
+      this.SET_CURRENT_INDEX(index);
     },
     // 点击全屏显示事件
     fullScreenToggle() {
@@ -392,7 +401,6 @@ export default {
           } else {
             // 将可获取音源的歌曲加入历史歌单中
             // this.ADD_HISTORY_SONG(newSong);
-            this.ADD_SEQUENCE_SONG(newSong);
           }
           this.$refs.audio.src = url;
           this.$refs.audio.play();
