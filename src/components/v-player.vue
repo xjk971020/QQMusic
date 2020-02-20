@@ -1,5 +1,8 @@
 <template>
-  <div class="player">
+  <div
+    class="player"
+    :style="fullScreen ? 'margin-left:0;' : 'margin-left:220px'"
+  >
     <div class="mini-player clearfix" :class="{ 'mini-opacity': fullScreen }">
       <v-progress-bar :percent="percent" @upPlay="onupplay"></v-progress-bar>
       <div class="play-intro pull-left">
@@ -11,7 +14,11 @@
         <div class="play-music pull-left">
           <!--此刻正在播放歌曲-->
           <div class="play-music-intro" v-if="!isNull">
-            <span @click="fullScreenToggle" class="song-name">
+            <span
+              @click="fullScreenToggle"
+              class="song-name"
+              :style="fullScreen ? 'color:white' : ''"
+            >
               {{ currentSong.title }}
             </span>
           </div>
@@ -23,11 +30,23 @@
           <div class="play-music-time" v-else>00:00 / 00:00</div>
         </div>
       </div>
-      <div class="play-config pull-left clearfix">
+      <div
+        class="play-config pull-left clearfix"
+        :style="fullScreen ? 'left:45%' : ''"
+      >
         <div @click="changeMode" class="pull-left play-mode">
-          <i class="iconfont" :class="playMode"></i>
+          <i
+            class="iconfont"
+            :class="playMode"
+            :style="fullScreen ? 'color:white' : ''"
+          ></i>
         </div>
-        <div @click="prev" class="pull-left prev-song" :class="disableCls">
+        <div
+          @click="prev"
+          class="pull-left prev-song"
+          :class="disableCls"
+          :style="fullScreen ? 'color:white' : ''"
+        >
           <i class="iconfont icon-prev-song"></i>
         </div>
         <div
@@ -35,9 +54,19 @@
           :class="disablePlaySong"
           @click="togglePlay"
         >
-          <i class="iconfont" :class="playIcon"> </i>
+          <i
+            class="iconfont"
+            :class="playIcon"
+            :style="fullScreen ? 'color:black' : ''"
+          >
+          </i>
         </div>
-        <div @click="next" class="pull-left next-song" :class="disableCls">
+        <div
+          @click="next"
+          class="pull-left next-song"
+          :class="disableCls"
+          :style="fullScreen ? 'color:white' : ''"
+        >
           <i class="iconfont icon-next-song"></i>
         </div>
       </div>
@@ -168,16 +197,16 @@ export default {
       "ADD_HISTORY_SONG",
       "ADD_SEQUENCE_SONG"
     ]),
-    getIscroll (iscroll) {
-      this._resetLyricOffset()
+    getIscroll(iscroll) {
+      this._resetLyricOffset();
       if (this.currentLyric.lines.length === 0) {
-        prefix(this.$refs.lyricInfo, 'translate(0px, 0px)')
+        prefix(this.$refs.lyricInfo, "translate(0px, 0px)");
       } else {
-        prefix(this.$refs.lyricInfo, 'translate(0px, 200px)')
+        prefix(this.$refs.lyricInfo, "translate(0px, 200px)");
       }
-      iscroll.on('scrollStart', () => {
-        iscroll.y = -this.currentLineOffsetY
-      })
+      iscroll.on("scrollStart", () => {
+        iscroll.y = -this.currentLineOffsetY;
+      });
     },
     ready() {
       this.songReady = true;
@@ -317,11 +346,14 @@ export default {
     onupplay(percent) {
       let currentTime = percent * this.currentSong.interval;
       this.currentTime = this.$refs.audio.currentTime = currentTime;
+      if (!this.playing) {
+        this.togglePlay();
+      }
       if (this.currentLyric) {
         this.currentLyric.seek(currentTime * 1000);
       }
     },
-    // 点击播放发按钮
+    // 点击播放按钮
     togglePlay() {
       if (!this.songReady) {
         return;
@@ -448,12 +480,12 @@ export default {
   height: 9%;
   bottom: 0;
   width: 100%;
-  margin-left: 220px;
   background-color: white;
   z-index: 999;
   .mini-player {
     height: 100%;
     width: 100%;
+    position: relative;
     z-index: 999;
     .play-config {
       position: absolute;
