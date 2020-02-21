@@ -6,6 +6,8 @@ import SearchResult from "@/views/search-result";
 import TopList from "@/views/top-list";
 import TopDetail from "@/views/top-detail";
 import Singers from "@/views/singers";
+import SingerDetail from "@/views/singer-detail";
+import SheetsIndex from "@/views/sheets-index";
 
 Vue.use(VueRouter);
 
@@ -38,6 +40,16 @@ const routes = [
     path: "/singers",
     name: "singers",
     component: Singers
+  },
+  {
+    path: "/singer/:singerMid",
+    name: "singer",
+    component: SingerDetail
+  },
+  {
+    path: "/sheet",
+    name: "sheetsIndex",
+    component: SheetsIndex
   }
 ];
 

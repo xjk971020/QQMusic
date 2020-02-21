@@ -193,7 +193,6 @@ export default {
       "SET_PLAY_LIST",
       "SET_CURRENT_INDEX",
       "SET_MODE",
-      "SET_PLAY_LIST",
       "ADD_HISTORY_SONG",
       "ADD_SEQUENCE_SONG"
     ]),
@@ -320,7 +319,7 @@ export default {
       return time;
     },
     _resetLyricOffset() {
-      prefix(this.$refs.lyricInfo, "0.68s", "TransitionDuration");
+      prefix(this.$refs.lyricInfo, "1s", "TransitionDuration");
     },
     // 歌词滚动播放的监听事件
     _lyricPlay({ lineNum }) {
@@ -432,7 +431,7 @@ export default {
             this.$message.error("音源获取失败(或许收听该歌曲需要vip)");
           } else {
             // 将可获取音源的歌曲加入历史歌单中
-            // this.ADD_HISTORY_SONG(newSong);
+            this.ADD_HISTORY_SONG(newSong);
           }
           this.$refs.audio.src = url;
           this.$refs.audio.play();

@@ -67,25 +67,16 @@ const mutations = {
     state.playList = list;
   },
   [types.ADD_HISTORY_SONG](state, list) {
-    // if (state.historyList.length > 0) {
-    //   let songIndex = state.historyList.findIndex(item => {
-    //     return item.mid === list.mid;
-    //   });
-    //   // 如果存在已经添加过的歌曲，则删去原来的元素，添加到首位
-    //   if (songIndex >= 0) {
-    //     state.historyList.splice(songIndex, 1);
-    //   }
-    // }
-    // state.historyList.unshift(list);
-    // console.log("historyList:");
-    // state.historyList.forEach(item => {
-    //   console.log(item.name);
-    // });
-    if(state) {
-      return state;
-    } else  {
-      return list;
+    if (state.historyList.length > 0) {
+      let songIndex = state.historyList.findIndex(item => {
+        return item.mid === list.mid;
+      });
+      // 如果存在已经添加过的歌曲，则删去原来的元素，添加到首位
+      if (songIndex >= 0) {
+        state.historyList.splice(songIndex, 1);
+      }
     }
+    state.historyList.unshift(list);
   },
   [types.ADD_FAVOURITE_SONG](state, list) {
     state.favouriteList.unshift(list);

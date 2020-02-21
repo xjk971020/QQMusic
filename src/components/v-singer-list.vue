@@ -6,7 +6,9 @@
         v-for="(singer, index) in singerList"
         :key="index"
       >
-        <router-link :to="'/singer/' + singer.singer_mid">
+        <router-link
+          :to="{ name: 'singer', params: { singerMid: singer.singer_mid } }"
+        >
           <div class="img" v-lazy:background-image="singer.singer_pic"></div>
           <div class="singer-name">{{ singer.singer_name }}</div>
         </router-link>
@@ -52,9 +54,9 @@ export default {
         width: 200px;
         border-radius: 50%;
       }
-        .img:hover {
-            box-shadow: 0 0 5px #999;
-        }
+      .img:hover {
+        box-shadow: 0 0 5px #999;
+      }
       .singer-name {
         padding-top: 10px;
         width: 200px;
@@ -64,10 +66,10 @@ export default {
         color: $select-bg-color;
       }
     }
-      .singer-info:hover {
-          transition: all 0.3s;
-          transform: scale(1.2);
-      }
+    .singer-info:hover {
+      transition: all 0.3s;
+      transform: scale(1.2);
+    }
   }
 }
 </style>
