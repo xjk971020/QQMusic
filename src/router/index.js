@@ -4,6 +4,8 @@ import VueRouter from "vue-router";
 import Recommend from "@/views/recommend";
 import SearchResult from "@/views/search-result";
 import TopList from "@/views/top-list";
+import TopDetail from "@/views/top-detail";
+import Singers from "@/views/singers";
 
 Vue.use(VueRouter);
 
@@ -26,6 +28,16 @@ const routes = [
     path: "/topList",
     name: "topList",
     component: TopList
+  },
+  {
+    path: "/topDetail/:id",
+    name: "topDetail",
+    component: TopDetail
+  },
+  {
+    path: "/singers",
+    name: "singers",
+    component: Singers
   }
 ];
 

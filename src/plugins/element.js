@@ -10,7 +10,9 @@ import {
   Card,
   Carousel,
   CarouselItem,
-  Tooltip
+  Tooltip,
+  Select,
+  Option
 } from "element-ui";
 import elTableInfiniteScroll from "el-table-infinite-scroll";
 
@@ -24,6 +26,8 @@ Vue.use(Carousel);
 Vue.use(CarouselItem);
 Vue.use(elTableInfiniteScroll);
 Vue.use(Tooltip);
+Vue.use(Select);
+Vue.use(Option);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;

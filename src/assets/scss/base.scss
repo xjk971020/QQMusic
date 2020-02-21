@@ -1,4 +1,4 @@
-@import './variable';
+@import "./variable";
 
 * {
   box-sizing: border-box;
@@ -21,7 +21,7 @@ body {
 }
 .clearfix:after,
 .clearfix:before {
-  content: '';
+  content: "";
   display: table;
 }
 
@@ -32,9 +32,14 @@ body {
   float: right;
 }
 
+.el-table {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
 .el-table td,
 .el-table th.is-leaf {
-  border-bottom: none!important;
+  border-bottom: none !important;
 }
 
 // 滚动条样式
@@ -60,8 +65,25 @@ body {
   border-radius: 350% !important;
 }
 
-.el-carousel__indicator:hover .el-carousel__button{
+.el-carousel__indicator:hover .el-carousel__button {
   background-color: $select-bg-color;
 }
 
+// 查询歌手下拉框样式
+.el-select {
+  border: none;
+  width: 80px;
+  height: 30px;
+  font-size: 15px;
+  margin-top: -5px;
+  margin-right: 40px;
 
+  .el-input__inner {
+    border-radius: 50%;
+    border: none;
+    color: #8b9587;
+  }
+  .el-select-dropdown {
+    min-width: 130px !important;
+  }
+}

@@ -321,8 +321,6 @@ export default {
         height: 550px;
         padding-left: 20px;
         padding-top: 20px;
-        font-family: "Helvetica Neue", Helvetica, "PingFang SC",
-          "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
         a {
           text-decoration: none;
           color: black;

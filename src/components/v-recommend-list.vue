@@ -12,7 +12,7 @@
           </div>
         </div>
       </div>
-      <p>{{ sheet.title | cutRecommendSheetName }}</p>
+      <p>{{ sheet.title }}</p>
       <p>{{ sheet.username }}</p>
     </div>
   </div>
@@ -44,6 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '~@/assets/scss/mixin';
 @import "~@/assets/scss/variable";
 .recommendSheetList {
   display: flex;
@@ -102,12 +103,14 @@ export default {
 
     p:nth-child(2) {
       font-size: 14px;
+      @include text-overflow;
     }
     p:nth-child(3) {
       font-size: 12px;
       color: #778079;
       position: relative;
       top: -5px;
+      @include text-overflow;
     }
     p:hover {
       color: $select-bg-color;

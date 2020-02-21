@@ -39,7 +39,7 @@ export default {
         iconName: "icon-sheet"
       },
       {
-        link: "/singer",
+        link: "/singers",
         name: "歌手",
         iconName: "icon-singer"
       }
