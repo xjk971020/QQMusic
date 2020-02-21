@@ -108,7 +108,7 @@ export default {
       cursor: pointer;
       .image {
         position: relative;
-        top: -20px;
+        top: -30px;
         left: -20px;
         width: 165px;
         float: left;

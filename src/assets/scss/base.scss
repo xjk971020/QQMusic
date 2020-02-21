@@ -87,3 +87,8 @@ body {
     min-width: 130px !important;
   }
 }
+
+.el-pagination.is-background .el-pager li:not(.disabled).active{
+  background-color:$select-bg-color !important;   // 进行修改背景和字体
+  color: #fff;
+}
