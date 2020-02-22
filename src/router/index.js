@@ -9,6 +9,7 @@ import Singers from "@/views/singers";
 import SingerDetail from "@/views/singer-detail";
 import SheetsIndex from "@/views/sheets-index";
 import SheetDetail from "@/views/sheet-detail";
+import SheetSingle from "@/views/sheet-single";
 import NotFound from "@/views/notfound";
 
 Vue.use(VueRouter);
@@ -59,7 +60,12 @@ const routes = [
     component: SheetDetail
   },
   {
-    path: '*',
+    path: "/sheet/single/:categoryId/:categoryName",
+    name: "sheetSingle",
+    component: SheetSingle
+  },
+  {
+    path: "*",
     component: NotFound
   }
 ];

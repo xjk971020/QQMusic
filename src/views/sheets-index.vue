@@ -1,8 +1,12 @@
 <template>
   <div class="sheet-index">
     <div class="sort-info">
-      <button v-for="(sort, index) in categoriesList" :key="index">
-        {{ sort.categoryGroupName }}
+      <button
+        v-for="(sort, index) in sortList"
+        :key="index"
+        @click="toSheetSingle(sort.categoryId, sort.categoryName)"
+      >
+        {{ sort.categoryName }}
       </button>
       <button>全部</button>
     </div>
@@ -28,7 +32,7 @@
         </li>
       </ul>
     </div>
-      <v-sheet-list :categoryId="categoryId" :sortId="sortId"></v-sheet-list>
+    <v-sheet-list :categoryId="categoryId" :sortId="sortId"></v-sheet-list>
   </div>
 </template>
 
@@ -45,7 +49,8 @@ export default {
       categoriesList: [],
       //1:最新 2:最热
       sortId: 1,
-      categoryId: 10000000
+      categoryId: 10000000,
+      sortList: []
     };
   },
   created() {
@@ -57,16 +62,38 @@ export default {
       this.$axios.get(getSongListCategories).then(response => {
         if (response.data.response.code === 0) {
           this.categoriesList = response.data.response.data.categories;
+          this.categoriesList.splice(0, 1);
+          // 随机生成十个标签
+          let length = this.categoriesList.length;
+          for (let i = 0; i < 10; ++i) {
+            let items = this.categoriesList[this.random(length)].items;
+            let itemsLength = items.length;
+            let item = items[this.random(itemsLength)];
+            this.sortList.push(item);
+          }
+          console.log(this.categoriesList);
         } else {
           this.$message.error("获取歌单分类信息失败");
         }
       });
+    },
+    random(i) {
+      return Math.floor(Math.random() * i);
     },
     changeSortIdByHot() {
       this.sortId = 2;
     },
     changeSortIdByNew() {
       this.sortId = 1;
+    },
+    toSheetSingle(categoryId,categoryName) {
+      this.$router.push({
+        name: "sheetSingle",
+        params: {
+          categoryId: categoryId,
+          categoryName: categoryName
+        }
+      });
     }
   }
 };
@@ -81,8 +108,10 @@ export default {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   .sort-info {
-    height: 6%;
     width: 100%;
+    .el-select {
+      color: $black;
+    }
     button {
       width: 90px;
       height: 30px;
@@ -93,13 +122,14 @@ export default {
       border-radius: 5px;
       cursor: pointer;
       margin-right: 15px;
+      margin-bottom: 10px;
     }
     button:hover {
       color: $select-bg-color;
     }
   }
   .selected-sheet-info {
-      height:60px;
+    height: 60px;
     .sort-name-list {
       list-style: none;
       li {

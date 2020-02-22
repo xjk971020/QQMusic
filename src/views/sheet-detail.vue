@@ -84,14 +84,14 @@ export default {
     ...mapMutations([
       "SET_CURRENT_INDEX",
       "SET_PLAY_LIST",
-      "SET_SEQUENCE_LIST"
+      "SET_SEQUENCE_LIST",
+      "SET_PLAYING_STATE"
     ]),
     getSongListDetail() {
       this.$axios.get(getSongListDetail + this.disstid).then(response => {
         if (response.data.response.code === 0) {
           this.cdlist = response.data.response.cdlist[0];
           this.songList = this.cdlist.songlist;
-          console.log(this.cdlist);
         } else {
           this.$message.error("获取歌单信息失败");
         }
@@ -99,6 +99,7 @@ export default {
     },
     playAll() {
       this.SET_PLAY_LIST(this.songList);
+      this.SET_PLAYING_STATE(true);
       this.SET_CURRENT_INDEX(0);
     }
   }

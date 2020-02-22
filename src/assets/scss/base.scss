@@ -35,6 +35,7 @@ body {
 .el-table {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  margin-bottom: 15px;
 }
 
 .el-table td,
@@ -70,21 +71,23 @@ body {
 }
 
 // 查询歌手下拉框样式
-.el-select {
-  border: none;
-  width: 80px;
-  height: 30px;
-  font-size: 15px;
-  margin-top: -5px;
-  margin-right: 40px;
-
-  .el-input__inner {
-    border-radius: 50%;
+.btns {
+  .el-select {
     border: none;
-    color: #8b9587;
-  }
-  .el-select-dropdown {
-    min-width: 130px !important;
+    width: 80px;
+    height: 30px;
+    font-size: 15px;
+    margin-top: -5px;
+    margin-right: 40px;
+
+    .el-input__inner {
+      border-radius: 50%;
+      border: none;
+      color: #8b9587;
+    }
+    .el-select-dropdown {
+      min-width: 130px !important;
+    }
   }
 }
 
@@ -96,4 +99,30 @@ body {
 .comment .el-input .el-input__inner {
   background-color: #f3f3f3;
   border: none;
+}
+
+.sort-info {
+  .el-select {
+    border: none;
+    width: 80px;
+    height: 30px;
+    font-size: 15px;
+    margin-top: -5px;
+    margin-right: 40px;
+    input::-webkit-input-placeholder {
+      color: $black;
+    }
+    input::-ms-input-placeholder {
+      color: $black;
+    }
+    .el-input__inner {
+      border-radius: 50%;
+      border: none;
+      color: $black !important;
+
+    }
+    .el-select-dropdown {
+      min-width: 130px !important;
+    }
+  }
 }

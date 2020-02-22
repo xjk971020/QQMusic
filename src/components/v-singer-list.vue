@@ -45,6 +45,7 @@ export default {
     .singer-info {
       float: left;
       margin: 22px 22px;
+      height: 250px;
       a {
         text-decoration: none;
         color: $black;
