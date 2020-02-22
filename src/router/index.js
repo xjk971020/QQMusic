@@ -8,7 +8,8 @@ import TopDetail from "@/views/top-detail";
 import Singers from "@/views/singers";
 import SingerDetail from "@/views/singer-detail";
 import SheetsIndex from "@/views/sheets-index";
-import sheetDetail from "@/views/sheet-detail";
+import SheetDetail from "@/views/sheet-detail";
+import NotFound from "@/views/notfound";
 
 Vue.use(VueRouter);
 
@@ -55,7 +56,11 @@ const routes = [
   {
     path: "/sheet/:dissid",
     name: "sheetDetail",
-    component: sheetDetail
+    component: SheetDetail
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ];
 
