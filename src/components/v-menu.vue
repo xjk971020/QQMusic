@@ -34,7 +34,7 @@ export default {
         iconName: "icon-rank"
       },
       {
-        link: "/sheet",
+        link: "/sheets",
         name: "歌单",
         iconName: "icon-sheet"
       },

@@ -22,7 +22,7 @@
     <div class="recommend">
       <p class="recommendName">
         <span class="title">推荐歌单</span>
-        <router-link to="/sheet">
+        <router-link to="/sheets">
           <span class="more">更多<i class="iconfont icon-next"></i></span>
         </router-link>
       </p>

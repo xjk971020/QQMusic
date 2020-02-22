@@ -44,7 +44,7 @@ export default {
     return {
       categoriesList: [],
       //1:最新 2:最热
-      sortId: 2,
+      sortId: 1,
       categoryId: 10000000
     };
   },

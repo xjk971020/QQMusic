@@ -6,7 +6,7 @@
         v-for="(sheet, index) in sheetList"
         :key="index"
       >
-        <div class="image-area">
+        <div class="image-area" @click="toSheetDetail(sheet.dissid)">
           <div class="img" v-lazy:background-image="sheet.imgurl">
             <div class="player">
               <div class="player-icon">
@@ -109,6 +109,12 @@ export default {
     pageChange(page) {
       this.queryInfo.page = page;
       this.getSongLists();
+    },
+    toSheetDetail(dissid) {
+      this.$router.push({
+        name: "sheetDetail",
+        params: { dissid: dissid }
+      });
     }
   },
   watch: {

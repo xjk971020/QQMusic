@@ -8,6 +8,7 @@ import TopDetail from "@/views/top-detail";
 import Singers from "@/views/singers";
 import SingerDetail from "@/views/singer-detail";
 import SheetsIndex from "@/views/sheets-index";
+import sheetDetail from "@/views/sheet-detail";
 
 Vue.use(VueRouter);
 
@@ -47,9 +48,14 @@ const routes = [
     component: SingerDetail
   },
   {
-    path: "/sheet",
+    path: "/sheets",
     name: "sheetsIndex",
     component: SheetsIndex
+  },
+  {
+    path: "/sheet/:dissid",
+    name: "sheetDetail",
+    component: sheetDetail
   }
 ];
 

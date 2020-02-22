@@ -13,7 +13,8 @@ import {
   Tooltip,
   Select,
   Option,
-  Pagination
+  Pagination,
+  Input
 } from "element-ui";
 import elTableInfiniteScroll from "el-table-infinite-scroll";
 
@@ -30,6 +31,7 @@ Vue.use(Tooltip);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Pagination);
+Vue.use(Input);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
