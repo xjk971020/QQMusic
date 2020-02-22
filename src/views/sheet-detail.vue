@@ -118,6 +118,8 @@ export default {
   .sheet-detail-info {
     height: 190px;
     width: 100%;
+    position: relative;
+    z-index: 30;
     .image-area {
       .img {
         width: 170px;
@@ -213,6 +215,7 @@ export default {
         box-shadow: 0 0 33px #ccc;
         min-height: 50px;
         .desc-show {
+          background-color: $white;
           color: #868686;
           font-size: 14px;
           padding: 10px;
@@ -236,6 +239,8 @@ export default {
     height: 15px;
     /*margin: 10px;*/
     padding-left: 5px;
+    position: relative;
+    z-index: 20;
     li {
       float: left;
       margin-right: 10px;

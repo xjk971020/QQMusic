@@ -126,6 +126,8 @@ export default {
 @import "~@/assets/scss/mixin";
 @import "~@/assets/scss/variable";
 .song-list {
+  position: relative;
+  z-index: 10;
   .el-table {
     .name-info {
       height: 20px;

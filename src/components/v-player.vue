@@ -101,7 +101,7 @@
               <span>歌手:</span>
               <span v-for="(singer, index) in currentSong.singer" :key="index">
                 <span v-if="index != 0"> /</span>
-                <span
+                <span @click="fullScreenToggle()"
                   ><router-link
                     :to="{ path: '/singer/' + currentSong.singer[index].mid }"
                   >
@@ -110,7 +110,7 @@
                 >
               </span>
               <span class="album-name">专辑:</span>
-              <span
+              <span @click="fullScreenToggle()"
                 ><router-link
                   :to="{ path: '/album/detail/' + currentSong.album.mid }"
                   >{{ currentSong.album.name }}</router-link
@@ -303,6 +303,7 @@ export default {
     fullScreenToggle() {
       if (!this.isNull) {
         this.SET_FULL_SCREEN_STATE(!this.fullScreen);
+        console.log(this.fullScreen)
       }
     },
     // 过滤歌曲播放时间
