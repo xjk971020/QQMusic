@@ -64,10 +64,11 @@ body {
   height: 10px !important;
   width: 10px !important;
   border-radius: 350% !important;
+  background-color: $select-bg-color !important;
 }
 
 .el-carousel__indicator:hover .el-carousel__button {
-  background-color: $select-bg-color;
+  background-color: #eeeeee;
 }
 
 // 查询歌手下拉框样式

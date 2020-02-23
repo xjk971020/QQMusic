@@ -8,7 +8,7 @@
       >
         {{ sort.categoryName }}
       </button>
-      <button>全部</button>
+      <button @click="toSheetAll()">全部</button>
     </div>
     <!-- 精选歌单-->
     <div class="selected-sheet-info clearfix">
@@ -65,7 +65,7 @@ export default {
           this.categoriesList.splice(0, 1);
           // 随机生成十个标签
           let length = this.categoriesList.length;
-          for (let i = 0; i < 10; ++i) {
+          for (let i = 0; i < 11; ++i) {
             let items = this.categoriesList[this.random(length)].items;
             let itemsLength = items.length;
             let item = items[this.random(itemsLength)];
@@ -86,7 +86,7 @@ export default {
     changeSortIdByNew() {
       this.sortId = 1;
     },
-    toSheetSingle(categoryId,categoryName) {
+    toSheetSingle(categoryId, categoryName) {
       this.$router.push({
         name: "sheetSingle",
         params: {
@@ -94,6 +94,9 @@ export default {
           categoryName: categoryName
         }
       });
+    },
+    toSheetAll() {
+      this.$router.push("/all/sheet");
     }
   }
 };

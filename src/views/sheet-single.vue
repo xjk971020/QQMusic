@@ -56,8 +56,8 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/variable";
 .sheet-single {
-  height: 85%;
-  width: 96%;
+  height: 92%;
+  width: 98%;
   margin: 15px auto;
   .head-info {
     height: 60px;
