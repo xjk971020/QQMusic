@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { getSingerDetail } from "@/api/singer";
+import { getSingerDetailApi } from "@/api/singer";
 export default {
   name: "SingerDetail",
   data() {
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     getSingerInfo(id) {
-      this.$axios.get(getSingerDetail + id).then(response => {
+      this.$axios.get(getSingerDetailApi + id).then(response => {
         console.log(response);
       });
     }

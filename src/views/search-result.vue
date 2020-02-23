@@ -85,7 +85,10 @@
             <template slot-scope="scope">
               <span class="album-name">
                 <router-link
-                  :to="{ path: '/album/detail/' + scope.row.album }"
+                  :to="{
+                    name: 'albumDetail',
+                    params: { albumId: scope.row.album.mid }
+                  }"
                   >{{ scope.row.album.name }}</router-link
                 ></span
               >

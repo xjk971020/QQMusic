@@ -112,7 +112,10 @@
               <span class="album-name">专辑:</span>
               <span @click="fullScreenToggle()"
                 ><router-link
-                  :to="{ path: '/album/detail/' + currentSong.album.mid }"
+                  :to="{
+                    name: 'albumDetail',
+                    params: { albumId: currentSong.album.mid }
+                  }"
                   >{{ currentSong.album.name }}</router-link
                 ></span
               >
@@ -303,7 +306,7 @@ export default {
     fullScreenToggle() {
       if (!this.isNull) {
         this.SET_FULL_SCREEN_STATE(!this.fullScreen);
-        console.log(this.fullScreen)
+        console.log(this.fullScreen);
       }
     },
     // 过滤歌曲播放时间
@@ -409,6 +412,7 @@ export default {
   watch: {
     // 当当前歌曲被替换时, 播放组件选择新的歌曲播放
     currentSong(newSong, oldSong) {
+      console.log(newSong);
       if (!newSong.mid) {
         return;
       }
@@ -433,6 +437,7 @@ export default {
             // 将可获取音源的歌曲加入历史歌单中
             this.ADD_HISTORY_SONG(newSong);
           }
+          console.log(url);
           this.$refs.audio.src = url;
           this.$refs.audio.play();
           this.SET_ISNULL_STATE(false);

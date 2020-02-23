@@ -9,7 +9,7 @@
         <template slot-scope="scope">
           <div class="name-info">
             <span>{{ indexFilter(scope.$index) + " " }}</span>
-            <span class="song-name">{{ scope.row.name }}</span>
+            <span class="song-name">{{ scope.row.songname }}</span>
             <div class="now-play">
               <el-tooltip
                 class="item"
@@ -48,15 +48,6 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="专辑">
-        <template slot-scope="scope">
-          <span class="album-name">
-            <router-link :to="{ path: '/album/detail/' + scope.row.album }">{{
-              scope.row.album.name
-            }}</router-link></span
-          >
-        </template>
-      </el-table-column>
       <el-table-column label="时长">
         <template slot-scope="scope">
           {{ filterTime(scope.row.interval) }}
@@ -70,16 +61,12 @@
 import { mapActions } from "vuex";
 
 export default {
-  name: "VSongList",
-  data() {
-    return {};
-  },
+  name: "VAlbumSongList",
   props: {
     songList: {
       type: Array
     }
   },
-  created() {},
   methods: {
     ...mapActions(["selectPlay"]),
     indexFilter(value) {
@@ -104,6 +91,9 @@ export default {
       return time;
     },
     play(row) {
+      row.mid = row.songmid;
+      row.album = {};
+      row.album.mid = row.albummid;
       this.selectPlay({
         list: row,
         index: 0
@@ -111,12 +101,6 @@ export default {
     },
     playMusic(row) {
       this.play(row);
-    }
-  },
-  watch: {
-    $route(to, from) {
-      console.log(to);
-      console.log(from);
     }
   }
 };
