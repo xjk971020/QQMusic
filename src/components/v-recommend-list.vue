@@ -4,6 +4,7 @@
       class="recommendSheet"
       v-for="(sheet, index) in recommendPlayList"
       :key="index"
+      @click="toSheet(sheet.content_id)"
     >
       <div class="img" v-lazy:background-image="sheet.cover">
         <div class="player">
@@ -29,8 +30,14 @@ export default {
       }
     }
   },
-  data() {
-    return {};
+  methods: {
+    toSheet(id) {
+      console.log(id);
+      this.$router.push({
+        name: "sheetDetail",
+        params: { dissid: id }
+      });
+    }
   },
   filters: {
     cutRecommendSheetName(value) {
@@ -44,7 +51,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@/assets/scss/mixin';
+@import "~@/assets/scss/mixin";
 @import "~@/assets/scss/variable";
 .recommendSheetList {
   display: flex;

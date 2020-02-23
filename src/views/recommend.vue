@@ -58,6 +58,7 @@ export default {
   },
   created() {
     this.getRecommend();
+
   },
   methods: {
     getRecommend() {
@@ -69,7 +70,7 @@ export default {
             5
           );
           this.recommendNewSongInfo = response.data.response.new_song.data.songlist;
-          console.log(response.data.response.focus.data.content);
+          console.log(this.recommendPlayList)
         }
       });
     }
