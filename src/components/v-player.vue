@@ -434,7 +434,34 @@ export default {
             this.$message.error("音源获取失败(或许收听该歌曲需要vip)");
           } else {
             // 将可获取音源的歌曲加入历史歌单中
-            this.ADD_HISTORY_SONG(newSong);
+            let historySongs = window.localStorage.getItem("history_songs");
+            if (
+              historySongs === undefined ||
+              historySongs === null ||
+              historySongs.trim() === ""
+            ) {
+              historySongs = [];
+              historySongs.push(newSong);
+              window.localStorage.setItem(
+                "history_songs",
+                JSON.stringify(historySongs)
+              );
+            } else {
+              historySongs = JSON.parse(historySongs);
+              let exist = false;
+              historySongs.forEach(item => {
+                if (item.mid === newSong.mid) {
+                  exist = true;
+                }
+              });
+              if (!exist) {
+                historySongs.push(newSong);
+                window.localStorage.setItem(
+                  "history_songs",
+                  JSON.stringify(historySongs)
+                );
+              }
+            }
           }
           console.log(url);
           this.$refs.audio.src = url;

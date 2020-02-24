@@ -8,7 +8,6 @@
       <el-table-column label="歌曲" width="320px">
         <template slot-scope="scope">
           <div class="name-info">
-            <span>{{ indexFilter(scope.$index) + " " }}</span>
             <span class="song-name">{{ scope.row.name }}</span>
             <div class="now-play">
               <el-tooltip
@@ -61,11 +60,6 @@
           >
         </template>
       </el-table-column>
-      <el-table-column label="时长">
-        <template slot-scope="scope">
-          {{ filterTime(scope.row.interval) }}
-        </template>
-      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -74,39 +68,14 @@
 import { mapActions } from "vuex";
 
 export default {
-  name: "VSongList",
-  data() {
-    return {};
-  },
+  name: "VHistorySongList",
   props: {
     songList: {
       type: Array
     }
   },
-  created() {},
   methods: {
     ...mapActions(["selectPlay"]),
-    indexFilter(value) {
-      value = value + 1;
-      if (value < 10) {
-        value = "0" + value;
-        return value;
-      } else {
-        return value;
-      }
-    },
-    filterTime(time) {
-      time = time | 0;
-      let minute = (time / 60) | 0;
-      let second = this._getzero(time % 60);
-      return `${minute}:${second}`;
-    },
-    _getzero(time) {
-      if (parseInt(time) < 10) {
-        time = `0${time}`;
-      }
-      return time;
-    },
     play(row) {
       this.selectPlay({
         list: row,
@@ -123,53 +92,49 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/mixin";
 @import "~@/assets/scss/variable";
-.song-list {
-  position: relative;
-  z-index: 10;
-  .el-table {
-    .name-info {
-      height: 20px;
-      span {
-        line-height: 20px;
-        display: inline-block;
-        @include text-overflow;
-      }
-    }
-    .song-name {
-      margin-left: 10px;
-      width: 100px;
-    }
-    a {
-      text-decoration: none;
-      color: black;
-    }
-    .now-play {
-      border-radius: 2px;
-      color: grey;
-      float: right;
-      padding: 2px;
-      cursor: pointer;
-      margin-right: 20px;
-      display: none;
-      i {
-        font-size: 16px;
-        margin-right: 5px;
-      }
-    }
-    tr:hover .now-play {
-      display: block;
-    }
-    .singer-name {
+.el-table {
+  .name-info {
+    height: 20px;
+    span {
+      line-height: 20px;
       display: inline-block;
+      @include text-overflow;
     }
-    a:hover {
-      color: $select-bg-color;
-      cursor: pointer;
+  }
+  .song-name {
+    margin-left: 10px;
+    width: 100px;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  .now-play {
+    border-radius: 2px;
+    color: grey;
+    float: right;
+    padding: 2px;
+    cursor: pointer;
+    margin-right: 20px;
+    display: none;
+    i {
+      font-size: 16px;
+      margin-right: 5px;
     }
-    .album-name:hover {
-      color: $select-bg-color;
-      cursor: pointer;
-    }
+  }
+  tr:hover .now-play {
+    display: block;
+  }
+  .singer-name {
+    display: inline-block;
+  }
+  a:hover {
+    color: $select-bg-color;
+    cursor: pointer;
+  }
+  .album-name:hover {
+    color: $select-bg-color;
+    cursor: pointer;
   }
 }
 </style>

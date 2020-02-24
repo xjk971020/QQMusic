@@ -46,12 +46,12 @@ export default {
     ];
     this.myMusic = [
       {
-        link: "history",
+        link: "/history",
         name: "播放历史",
         iconName: "icon-sheet"
       },
       {
-        link: "like",
+        link: "/like",
         name: "我的收藏",
         iconName: "icon-sheet"
       }

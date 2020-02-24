@@ -10,10 +10,6 @@ const state = {
   sequenceList: [],
   // 精选点击播放歌单时, 播放的歌单
   playList: [],
-  // 播放历史的歌曲列表
-  historyList: [],
-  // 添加收藏的歌曲列表
-  favouriteList: [],
   mode: mode.sequence,
   currentIndex: -1
 };
@@ -24,8 +20,6 @@ const getters = {
   fullScreen: state => state.fullScreen,
   sequenceList: state => state.sequenceList,
   playList: state => state.playList,
-  historyList: state => state.historyList,
-  favouriteList: state => state.favouriteList,
   mode: state => state.mode,
   currentIndex: state => state.currentIndex,
   // 顺序播放的当前歌曲
@@ -65,21 +59,6 @@ const mutations = {
   },
   [types.SET_PLAY_LIST](state, list) {
     state.playList = list;
-  },
-  [types.ADD_HISTORY_SONG](state, list) {
-    if (state.historyList.length > 0) {
-      let songIndex = state.historyList.findIndex(item => {
-        return item.mid === list.mid;
-      });
-      // 如果存在已经添加过的歌曲，则删去原来的元素，添加到首位
-      if (songIndex >= 0) {
-        state.historyList.splice(songIndex, 1);
-      }
-    }
-    state.historyList.unshift(list);
-  },
-  [types.ADD_FAVOURITE_SONG](state, list) {
-    state.favouriteList.unshift(list);
   },
   [types.SET_MODE](state, mode) {
     state.mode = mode;

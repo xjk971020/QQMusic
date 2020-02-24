@@ -12,6 +12,7 @@ import SheetDetail from "@/views/sheet-detail";
 import SheetSingle from "@/views/sheet-single";
 import SheetSort from "@/views/sheet-sort";
 import AlbumDetail from "@/views/album-detail";
+import History from "@/views/history";
 import NotFound from "@/views/notfound";
 
 Vue.use(VueRouter);
@@ -75,6 +76,11 @@ const routes = [
     path: "/album/:albumId",
     name: "albumDetail",
     component: AlbumDetail
+  },
+  {
+    path: "/history",
+    name: history,
+    component: History
   },
   {
     path: "*",
