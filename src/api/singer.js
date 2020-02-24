@@ -1,6 +1,6 @@
 export const getSingerList = "/getSingerList";
 export const getSingerDetailApi = "/getSingerDesc?singermid=";
-
+export const getSingerStarNum = "/getSingerStarNum?singermid=";
 import jsonp from "@/util/jsonp";
 import { commonParams, options } from "@/util/config";
 

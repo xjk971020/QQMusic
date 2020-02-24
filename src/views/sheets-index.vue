@@ -71,7 +71,6 @@ export default {
             let item = items[this.random(itemsLength)];
             this.sortList.push(item);
           }
-          console.log(this.categoriesList);
         } else {
           this.$message.error("获取歌单分类信息失败");
         }

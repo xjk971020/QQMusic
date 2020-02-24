@@ -1,11 +1,20 @@
 export default class Song {
-  constructor ({songid, mid, albummid, songname, singername, albumname, interval}) {
-    this.songid = songid
-    this.mid = mid
-    this.albummid = albummid
-    this.songname = songname
-    this.singername = singername
-    this.albumname = albumname
-    this.interval = interval
+  constructor({
+    mid,
+    albummid,
+    songname,
+    singers,
+    albumname,
+    interval
+  }) {
+    this.mid = mid;
+    this.album = {};
+    this.album.mid = albummid;
+    this.album.name = albumname;
+    this.name = songname;
+    this.songname = songname;
+    // 数组
+    this.singer = singers;
+    this.interval = interval;
   }
 }
