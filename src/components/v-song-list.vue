@@ -51,9 +51,13 @@
       <el-table-column label="专辑">
         <template slot-scope="scope">
           <span class="album-name">
-            <router-link :to="{ path: '/album/detail/' + scope.row.album }">{{
-              scope.row.album.name
-            }}</router-link></span
+            <router-link
+              :to="{
+                name: 'albumDetail',
+                params: { albumId: scope.row.album.mid }
+              }"
+              >{{ scope.row.album.name }}</router-link
+            ></span
           >
         </template>
       </el-table-column>

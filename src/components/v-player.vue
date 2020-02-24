@@ -19,7 +19,7 @@
               class="song-name"
               :style="fullScreen ? 'color:white' : ''"
             >
-              {{ currentSong.title }}
+              {{ currentSong.name }}
             </span>
           </div>
           <div class="play-music-intro" v-else>聆听你的心动</div>
