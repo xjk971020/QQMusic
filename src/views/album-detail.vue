@@ -77,6 +77,7 @@
 </template>
 
 <script>
+  import Song from "@/class/song";
 import { getAlbumInfo,getSingerAlbums, getAlbumDetail } from "@/api/album";
 import VAlbumSongList from "@/components/v-album-song-list";
 import List from '@/class/list';
@@ -110,15 +111,31 @@ export default {
     _getAlbumInfo() {
       this.$axios.get(getAlbumInfo + this.albumId).then(response => {
         if (response.data.response.code === 0) {
-          this.songList = response.data.response.data.list;
+          this.songList = this._createSonglist(response.data.response.data.list);
           this.albumInfo = response.data.response.data;
-          console.log(this.albumInfo);
+          console.log(this.songList);
           this._getSingerAlbums();
           this._getAlbumDetail();
         } else {
           this.$message.error("获取专辑信息失败");
         }
       });
+    },
+    _createSonglist(list) {
+      let result = [];
+      list.forEach(item => {
+        result.push(
+                new Song({
+                  mid: item.songmid,
+                  albummid: item.albumid,
+                  songname: item.songname,
+                  singers: item.singer,
+                  albumname: item.albumname,
+                  interval: item.interval
+                })
+        );
+      });
+      return result;
     },
     _getSingerAlbums() {
       getSingerAlbums(this.albumInfo.singermid,0,5).then(response => {
@@ -155,6 +172,7 @@ export default {
     ]),
     playAll() {
       this.SET_PLAY_LIST(this.songList);
+      this.SET_SEQUENCE_LIST(this.songList);
       this.SET_CURRENT_INDEX(0);
     },
     notShowSongList() {

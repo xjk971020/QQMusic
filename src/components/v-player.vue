@@ -243,7 +243,6 @@ export default {
       if (!this.songReady) {
         return;
       }
-
       if (this.mode === mode.loop || this.sequenceList.length === 1) {
         this.loop();
         if (!this.playing) {

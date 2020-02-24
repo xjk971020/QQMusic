@@ -99,7 +99,7 @@ export default {
     },
     playAll() {
       this.SET_PLAY_LIST(this.songList);
-      this.SET_PLAYING_STATE(true);
+      this.SET_SEQUENCE_LIST(this.songList);
       this.SET_CURRENT_INDEX(0);
     }
   }

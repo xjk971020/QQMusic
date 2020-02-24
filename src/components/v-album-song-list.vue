@@ -91,11 +91,6 @@ export default {
       return time;
     },
     play(row) {
-      row.mid = row.songmid;
-      row.album = {};
-      row.album.mid = row.albummid;
-      row.album.name = row.albumname;
-      row.name = row.songname;
       this.selectPlay({
         list: row,
         index: 0
