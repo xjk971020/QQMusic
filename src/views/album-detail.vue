@@ -77,7 +77,7 @@
 </template>
 
 <script>
-  import Song from "@/class/song";
+import Song from "@/class/song";
 import { getAlbumInfo,getSingerAlbums, getAlbumDetail } from "@/api/album";
 import VAlbumSongList from "@/components/v-album-song-list";
 import List from '@/class/list';
@@ -113,7 +113,6 @@ export default {
         if (response.data.response.code === 0) {
           this.songList = this._createSonglist(response.data.response.data.list);
           this.albumInfo = response.data.response.data;
-          console.log(this.songList);
           this._getSingerAlbums();
           this._getAlbumDetail();
         } else {

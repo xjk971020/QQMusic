@@ -48,12 +48,12 @@ export default {
       {
         link: "/history",
         name: "播放历史",
-        iconName: "icon-sheet"
+        iconName: "el-icon-time"
       },
       {
         link: "/favourite",
         name: "我的收藏",
-        iconName: "icon-sheet"
+        iconName: "el-icon-star-on"
       }
     ];
   }

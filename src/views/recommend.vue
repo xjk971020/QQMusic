@@ -4,9 +4,7 @@
       <el-carousel-item v-for="(imgInfo, index) in focus" :key="index">
         <a
           :href="
-            'https://y.qq.com/n/yqq/album/' +
-              imgInfo.jump_info.url +
-              '.html'
+            'https://y.qq.com/n/yqq/album/' + imgInfo.jump_info.url + '.html'
           "
           target="_blank"
         >
@@ -58,7 +56,6 @@ export default {
   },
   created() {
     this.getRecommend();
-
   },
   methods: {
     getRecommend() {
@@ -69,14 +66,14 @@ export default {
             0,
             5
           );
-          this.recommendNewSongInfo = response.data.response.new_song.data.songlist;
-          console.log(this.recommendPlayList)
+          this.recommendNewSongInfo = response.data.response.new_song.data.songlist.splice(
+            0,
+            5
+          );
+          // console.log(this.recommendNewSongInfo);
         }
       });
     }
-  },
-  component: {
-    VRecommendList
   }
 };
 </script>
@@ -84,6 +81,8 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/variable";
 .recommendContent {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   width: 100%;
   height: 85%;
   overflow: scroll;
