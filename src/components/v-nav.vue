@@ -59,7 +59,8 @@ export default {
     margin: 0;
     font-size: 15px;
     font-weight: 600;
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     li {
       width: 100%;
       margin: 10px 0px;

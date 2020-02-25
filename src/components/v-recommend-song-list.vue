@@ -16,7 +16,9 @@
           </div>
         </div>
       </div>
-      <p class="album-name" @click="toAlbum(album.album_mid)">{{ album.album_name }}</p>
+      <p class="album-name" @click="toAlbum(album.album_mid)">
+        {{ album.album_name }}
+      </p>
       <p class="singers-name">
         <span
           class="singer-name"

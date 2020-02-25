@@ -1,5 +1,9 @@
 <template>
-  <div class="progress-bar-wrap" @click="skipPlay" :style="fullScreen? 'width:98%':'width:84%'">
+  <div
+    class="progress-bar-wrap"
+    @click="skipPlay"
+    :style="fullScreen ? 'width:98%' : 'width:84%'"
+  >
     <div class="progress-bar" ref="progressBar">
       <div class="progress-inner" ref="progressInner"></div>
       <div
@@ -27,7 +31,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["isNull","fullScreen"])
+    ...mapGetters(["isNull", "fullScreen"])
   },
   created() {
     this.move = {};

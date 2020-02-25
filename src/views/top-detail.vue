@@ -70,7 +70,11 @@ export default {
         });
       console.log(this.songList);
     },
-    ...mapMutations(["SET_CURRENT_INDEX","SET_PLAY_LIST","SET_SEQUENCE_LIST"]),
+    ...mapMutations([
+      "SET_CURRENT_INDEX",
+      "SET_PLAY_LIST",
+      "SET_SEQUENCE_LIST"
+    ]),
     playAll() {
       this.SET_PLAY_LIST(this.songList);
       this.SET_CURRENT_INDEX(0);

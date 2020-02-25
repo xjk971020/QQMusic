@@ -9,7 +9,7 @@
       ><button class="send">发布</button>
     </div>
     <div class="hot-comment-list">
-      <p class="title">精彩评论 ({{hotCommentList.length}})</p>
+      <p class="title">精彩评论 ({{ hotCommentList.length }})</p>
       <div
         class="comment-info"
         v-for="(comment, index) in hotCommentList"
@@ -22,27 +22,29 @@
         <div class="content pull-left">
           <p class="nickname">{{ comment.nick }}</p>
           <p class="content-detail" v-html="comment.rootcommentcontent"></p>
-          <p class="time">{{ time(comment.time) }} <button class="jubao pull-right">举报</button></p>
+          <p class="time">
+            {{ time(comment.time) }}
+            <button class="jubao pull-right">举报</button>
+          </p>
         </div>
       </div>
     </div>
     <div class="normal-comment-list">
-      <p class="title">全部评论 ({{commentList.length}})</p>
+      <p class="title">全部评论 ({{ commentList.length }})</p>
       <div
-              class="comment-info"
-              v-for="(comment, index) in commentList"
-              :key="index"
+        class="comment-info"
+        v-for="(comment, index) in commentList"
+        :key="index"
       >
         <div
-                class="head-img pull-left"
-                v-lazy:background-image="comment.avatarurl"
+          class="head-img pull-left"
+          v-lazy:background-image="comment.avatarurl"
         ></div>
         <div class="content pull-left">
           <p class="nickname">{{ comment.nick }}</p>
           <p class="content-detail" v-html="comment.rootcommentcontent"></p>
           <p class="time">{{ time(comment.time) }}</p>
         </div>
-
       </div>
     </div>
   </div>
@@ -157,7 +159,7 @@ export default {
           border: none;
           cursor: pointer;
         }
-        .jubao:hover{
+        .jubao:hover {
           color: $select-bg-color;
         }
       }
@@ -185,7 +187,8 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start;width: 80%;
+        align-items: flex-start;
+        width: 80%;
         p {
           margin: 7px 0;
         }

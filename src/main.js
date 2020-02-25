@@ -6,27 +6,24 @@ import store from "./store";
 import "@/assets/scss/index.scss";
 
 import axios from "axios";
-import VIscroll from "viscroll";
 import Lazyload from "vue-lazyload";
 import "./plugins/element.js";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 import x2js from "x2js"; //xml数据处理插件
 
 Vue.prototype.$x2js = new x2js(); //创建x2js对象，挂到vue原型上
-axios.defaults.baseURL = "http://127.0.0.1:3200/";
-Vue.prototype.$axios = axios;
 
-Vue.use(VIscroll, {
-  mouseWheel: true,
-  scrollbars: true,
-  fadeScrollbars: true,
-  interactiveScrollbars: true,
-  preventDefault: true,
-  tap: false,
-  bounce: false,
-  disableTouch: true,
-  disableMouse: true,
-  disablePointer: true
+axios.defaults.baseURL = "http://127.0.0.1:3200/";
+axios.interceptors.request.use(config => {
+  NProgress.start();
+  return config;
 });
+axios.interceptors.response.use(config => {
+  NProgress.done();
+  return config;
+});
+Vue.prototype.$axios = axios;
 
 Vue.use(Lazyload, {
   error: require("./assets/images/lazyloading.png"),

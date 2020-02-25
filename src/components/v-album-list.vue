@@ -6,7 +6,11 @@
         v-for="(album, index) in singerAlbums"
         :key="index"
       >
-        <div class="img" v-lazy:background-image="album.url" @click="toAlbumDetail(album.mid)">
+        <div
+          class="img"
+          v-lazy:background-image="album.url"
+          @click="toAlbumDetail(album.mid)"
+        >
           <div class="player">
             <div class="player-icon">
               <i class="iconfont icon-player"></i>
@@ -117,9 +121,9 @@ export default {
     },
     toAlbumDetail(mid) {
       this.$router.push({
-        name: 'albumDetail',
+        name: "albumDetail",
         params: { albumId: mid }
-      })
+      });
     }
   }
 };
