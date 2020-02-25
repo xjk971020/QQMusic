@@ -411,7 +411,6 @@ export default {
   watch: {
     // 当当前歌曲被替换时, 播放组件选择新的歌曲播放
     currentSong(newSong, oldSong) {
-      console.log(newSong);
       if (!newSong.mid) {
         return;
       }
