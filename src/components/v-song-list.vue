@@ -28,7 +28,10 @@
                 content="添加收藏"
                 placement="top-start"
               >
-                <i class="iconfont el-icon-circle-plus-outline"></i>
+                <i
+                  class="iconfont el-icon-circle-plus-outline"
+                  @click="addFavourite(scope.row)"
+                ></i>
               </el-tooltip>
             </div>
           </div>

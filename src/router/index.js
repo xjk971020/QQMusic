@@ -13,6 +13,7 @@ import SheetSingle from "@/views/sheet-single";
 import SheetSort from "@/views/sheet-sort";
 import AlbumDetail from "@/views/album-detail";
 import History from "@/views/history";
+import Favourite from "@/views/favourite";
 import NotFound from "@/views/notfound";
 
 Vue.use(VueRouter);
@@ -81,6 +82,11 @@ const routes = [
     path: "/history",
     name: history,
     component: History
+  },
+  {
+    path: "/favourite",
+    name: Favourite,
+    component: Favourite
   },
   {
     path: "*",

@@ -51,7 +51,7 @@ export default {
         iconName: "icon-sheet"
       },
       {
-        link: "/like",
+        link: "/favourite",
         name: "我的收藏",
         iconName: "icon-sheet"
       }

@@ -1,7 +1,7 @@
 <template>
   <div class="history-content-wrap">
     <div class="head-info">
-      <h1 class="title">播放历史</h1>
+      <h1 class="title">我的收藏</h1>
       <p class="num">共 {{ total }} 首</p>
       <div class="select clearfix">
         <button class="pull-left play-all" @click="playAll">
@@ -29,7 +29,7 @@
 import { mapMutations } from "vuex";
 import VHistorySongList from "@/components/v-history-song-list";
 export default {
-  name: "History",
+  name: "Favourite",
   components: {
     VHistorySongList
   },
@@ -43,7 +43,7 @@ export default {
     };
   },
   created() {
-    this.songList = JSON.parse(window.localStorage.getItem("history_songs"));
+    this.songList = JSON.parse(window.localStorage.getItem("favourite_songs"));
     this.searchSongList = this.songList;
     if (this.songList !== null && this.songList.length !== 0) {
       this.total = this.songList.length;

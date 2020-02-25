@@ -28,7 +28,10 @@
                 content="添加收藏"
                 placement="top-start"
               >
-                <i class="iconfont el-icon-circle-plus-outline"></i>
+                <i
+                  class="iconfont el-icon-circle-plus-outline"
+                  @click="addFavourite(scope.row)"
+                ></i>
               </el-tooltip>
             </div>
           </div>
@@ -58,6 +61,8 @@
         background
         layout="prev, pager, next"
         :total="this.singerInfo.total"
+        :current-page="queryInfo.page"
+        :page-size="queryInfo.limit"
         @current-change="pageChange"
         @prev-click="prev"
         @next-click="next"

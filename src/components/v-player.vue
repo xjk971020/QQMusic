@@ -441,7 +441,7 @@ export default {
               historySongs.trim() === ""
             ) {
               historySongs = [];
-              historySongs.push(newSong);
+              historySongs.unshift(newSong);
               window.localStorage.setItem(
                 "history_songs",
                 JSON.stringify(historySongs)
@@ -455,7 +455,7 @@ export default {
                 }
               });
               if (!exist) {
-                historySongs.push(newSong);
+                historySongs.unshift(newSong);
                 window.localStorage.setItem(
                   "history_songs",
                   JSON.stringify(historySongs)
@@ -463,7 +463,6 @@ export default {
               }
             }
           }
-          console.log(url);
           this.$refs.audio.src = url;
           this.$refs.audio.play();
           this.SET_ISNULL_STATE(false);
