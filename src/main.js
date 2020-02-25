@@ -11,6 +11,20 @@ import "./plugins/element.js";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import x2js from "x2js"; //xml数据处理插件
+import VIscroll from "viscroll";
+
+Vue.use(VIscroll, {
+  mouseWheel: true,
+  scrollbars: true,
+  fadeScrollbars: true,
+  interactiveScrollbars: true,
+  preventDefault: true,
+  tap: false,
+  bounce: false,
+  disableTouch: true,
+  disableMouse: true,
+  disablePointer: true
+});
 
 Vue.prototype.$x2js = new x2js(); //创建x2js对象，挂到vue原型上
 

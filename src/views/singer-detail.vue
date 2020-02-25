@@ -134,11 +134,6 @@ export default {
     this.singerMid = this.$route.params.singerMid;
     this._getData(this.singerMid);
   },
-  beforeRouteUpdate(to, from, next) {
-    this.singerMid = to.params.singermid;
-    this._getData(this.singerMid);
-    next();
-  },
   methods: {
     _getData() {
       this._getSimSinger(this.singerMid, 0, 5);
@@ -240,6 +235,14 @@ export default {
     },
     _cutDecimal(n, num) {
       return parseInt(n * Math.pow(10, num) + 0.5, 10) / Math.pow(10, num);
+    }
+  },
+  watch: {
+    $route: function(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.singerMid = this.$route.params.singerMid;
+        this._getData(this.singerMid);
+      }
     }
   }
 };

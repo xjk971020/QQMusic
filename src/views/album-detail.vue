@@ -102,11 +102,6 @@ export default {
     this.albumId = this.$route.params.albumId;
     this._getAlbumInfo();
   },
-  beforeRouteUpdate(to, from, next) {
-    this.albumId = this.$route.params.albumId;
-    this._getAlbumInfo();
-    next();
-  },
   methods: {
     _getAlbumInfo() {
       this.$axios.get(getAlbumInfo + this.albumId).then(response => {
@@ -185,6 +180,14 @@ export default {
         name: "albumDetail",
         params: {albumId: albummid}
       })
+    }
+  },
+  watch: {
+    $route: function(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.albumId = this.$route.params.albumId;
+          this._getAlbumInfo();
+      }
     }
   }
 };

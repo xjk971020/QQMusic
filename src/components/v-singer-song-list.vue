@@ -195,6 +195,15 @@ export default {
         params: { albumId: mid }
       });
     }
+  },
+  watch: {
+    singermid: function(newValue) {
+      this._getSingerDetail(
+        newValue,
+        this.queryInfo.page,
+        this.queryInfo.limit
+      );
+    }
   }
 };
 </script>
