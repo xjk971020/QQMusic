@@ -597,7 +597,7 @@ export default {
       padding-bottom: 25px;
       .thrum {
         width: 36px;
-        height: 100%;
+        height: 36px;
         background-size: cover;
         cursor: pointer;
       }
