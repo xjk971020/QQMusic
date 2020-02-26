@@ -5,13 +5,14 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
   presets: ["@vue/cli-plugin-babel/preset"],
   plugins: [
+    //打包时需将以下代码注释
     [
-      "component",
-      {
-        libraryName: "element-ui",
-        styleLibraryName: "theme-chalk"
-      }
-    ],
+    "component",
+    {
+      libraryName: "element-ui",
+      styleLibraryName: "theme-chalk"
+    }
+  ],
     ...prodPlugins
   ]
 };

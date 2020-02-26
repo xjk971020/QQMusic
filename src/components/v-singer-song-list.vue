@@ -18,7 +18,7 @@
                 placement="top-start"
               >
                 <i
-                  class="iconfont el-icon-video-play"
+                  class="iconfont icon-Player"
                   @click="playMusic(scope.row)"
                 ></i>
               </el-tooltip>
@@ -29,7 +29,7 @@
                 placement="top-start"
               >
                 <i
-                  class="iconfont el-icon-circle-plus-outline"
+                  class="iconfont icon-shoucang"
                   @click="addFavourite(scope.row)"
                 ></i>
               </el-tooltip>

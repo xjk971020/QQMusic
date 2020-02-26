@@ -52,7 +52,7 @@
                   placement="top-start"
                 >
                   <i
-                    class="iconfont el-icon-video-play"
+                    class="iconfont icon-Player"
                     @click="playMusic(scope.row)"
                   ></i>
                 </el-tooltip>
@@ -62,7 +62,7 @@
                   content="添加收藏"
                   placement="top-start"
                 >
-                  <i class="iconfont el-icon-circle-plus-outline"></i>
+                  <i class="iconfont icon-shoucang"></i>
                 </el-tooltip>
               </div>
             </template>
@@ -357,10 +357,10 @@ export default {
           color: $select-bg-color;
           cursor: pointer;
         }
-        .el-icon-video-play:hover {
+        .icon-Player:hover {
           color: $select-bg-color;
         }
-        .el-icon-circle-plus-outline:hover {
+        .icon-shoucang:hover {
           color: $select-bg-color;
         }
       }
