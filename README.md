@@ -4,6 +4,8 @@
 
 基于QQ音乐程序UI的网页版QQ音乐，项目基于前端框架[vue](https://github.com/vuejs/vue#readme)进行开发，[vue-router](https://github.com/vuejs/vue-router#readme)页面跳转，vuex全局存储播放的音乐信息，某些样式基于饿了么团队的[element ui](https://element.eleme.cn/#/zh-CN)组件。个人刚学完基于vue框架，vue-router，vuex的基础，以及css中布局基础以及某些常用的样式基础，基于以上知识，便仿照QQ音乐程序的UI做出了网页版QQ音乐。
 
+**喜欢的话还请点个star鼓励一下作者。**
+
 鉴于本人前端刚刚入门，本项目仅为刚学完vue基础和有css布局基础的同学提供参考，某些代码开发的还有不够规范之处，大神请用看笑话的心态看待，或提出批判性意见，本人虚心受教。
 
 如果想看项目截图的可以直接拉到最下面。
@@ -52,25 +54,25 @@ github上的图片如果无法访问，请访问线上地址: http://www.catheti
 
 ## 目录结构
 
-└─src
-    │  App.vue          项目入口
-    │  main-dev.js     开发环境配置
-    │  main-prod.js   生产环境配置
+└─src  
+    │─App.vue-----------项目入口  
+    │─main-dev.js-------开发环境配置  
+    │─main-prod.js------生产环境配置  
     │  
-    ├─api                 接口文件
-    ├─assets           静态资源
+    ├─api---------------接口文件  
+    ├─assets------------静态资源  
     │          
-    ├─class              使用的类文件
+    ├─class-------------使用的类文件  
     │      
-    ├─components   组件
+    ├─components--------组件  
     │      
-    ├─plugins
-    │      element.js  element-ui组件
+    ├─plugins  
+    │    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─element.js---element-ui组件  
     │      
-    ├─router             路由文件
-    ├─store               vuex共享
-    ├─util                  工具类
-    └─views              视图
+    ├─router-------------路由文件  
+    ├─store---------------vuex共享  
+    ├─util------------------工具类  
+    └─views---------------视图
 
 ## 优化
 
