@@ -21,7 +21,7 @@ export default {
 @import "~@/assets/scss/variable";
 .section {
   position: relative;
-  margin-left: $menu-width;
+  margin-left: 15%;
   height: 100%;
 }
 .v-enter,

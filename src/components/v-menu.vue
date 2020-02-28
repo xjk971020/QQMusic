@@ -65,7 +65,7 @@ export default {
 .menu {
   background-color: #f0f0f0;
   height: 100%;
-  width: 220px;
+  width: 15%;
   position: relative;
   float: left;
   img {

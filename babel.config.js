@@ -7,12 +7,12 @@ module.exports = {
   plugins: [
     //打包时需将以下代码注释
     [
-    "component",
-    {
-      libraryName: "element-ui",
-      styleLibraryName: "theme-chalk"
-    }
-  ],
+      "component",
+      {
+        libraryName: "element-ui",
+        styleLibraryName: "theme-chalk"
+      }
+    ],
     ...prodPlugins
   ]
 };

@@ -6,7 +6,7 @@
     <div class="pull-left history-btn" @click="forward()">
       <i class="iconfont icon-next"></i>
     </div>
-    <div class="pull-left">
+    <div class="search-wrap pull-left">
       <input
         v-model="searchContent"
         type="text"
@@ -65,26 +65,33 @@ export default {
     line-height: 30px;
     cursor: pointer;
   }
-  .search-input {
-    border-radius: $border-radius-bg;
-    outline: none;
-    border: none;
-    height: 30px;
-    width: 250px;
-    background-color: #e6e6e6;
-    padding-left: 25px;
+  .search-wrap {
+    position: relative;
+    .search-input {
+      border-radius: $border-radius-bg;
+      outline: none;
+      border: none;
+      height: 30px;
+      width: 250px;
+      background-color: #e6e6e6;
+      padding-left: 25px;
+      padding-right: 20px;
+    }
+    .search-btn {
+      z-index: 10;
+      cursor: pointer;
+      background-color: transparent;
+      border: 0;
+      outline: 0;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
+    .search-btn:hover {
+      color: $select-bg-color;
+    }
   }
-  .search-btn {
-    margin-left: -30px;
-    z-index: 10;
-    cursor: pointer;
-    background-color: transparent;
-    border: 0;
-    outline: 0;
-  }
-  .search-btn:hover {
-    color: $select-bg-color;
-  }
+
   .clear {
     clear: both;
   }

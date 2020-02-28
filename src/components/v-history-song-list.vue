@@ -5,7 +5,7 @@
       :data="songList"
       :highlight-current-row="true"
     >
-      <el-table-column label="歌曲" width="320px">
+      <el-table-column label="歌曲">
         <template slot-scope="scope">
           <div class="name-info">
             <span class="song-name">{{ scope.row.name }}</span>
