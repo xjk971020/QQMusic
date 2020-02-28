@@ -1,7 +1,7 @@
 <template>
   <div
     class="player"
-    :style="fullScreen ? 'margin-left:0;' : 'margin-left:220px'"
+    :style="fullScreen ? 'margin-left:0;' : 'margin-left:15%'"
   >
     <div class="mini-player clearfix" :class="{ 'mini-opacity': fullScreen }">
       <v-progress-bar :percent="percent" @upPlay="onupplay"></v-progress-bar>
