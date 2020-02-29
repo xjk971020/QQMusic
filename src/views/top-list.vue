@@ -98,9 +98,12 @@ export default {
   .content {
     height: 100%;
     overflow: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     .el-card {
       position: relative;
-      width: 400px;
+      width: 390px;
       height: 170px;
       float: left;
       background-color: #fafafa;

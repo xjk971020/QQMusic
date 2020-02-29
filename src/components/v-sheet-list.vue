@@ -139,10 +139,9 @@ export default {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     .sheet-info {
-      margin: 10px;
       cursor: pointer;
       width: 230px;
       height: 260px;
