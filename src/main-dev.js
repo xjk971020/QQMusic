@@ -28,7 +28,7 @@ Vue.use(VIscroll, {
 
 Vue.prototype.$x2js = new x2js(); //创建x2js对象，挂到vue原型上
 
-axios.defaults.baseURL = "http://127.0.0.1:3200/";
+axios.defaults.baseURL = "http://www.cathetine.cn:3200/";
 axios.interceptors.request.use(config => {
   NProgress.start();
   return config;

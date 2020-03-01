@@ -123,10 +123,12 @@ export default {
     position: relative;
     z-index: 30;
     .image-area {
+      width: 18%;
+      height: 100%;
       .img {
-        width: 170px;
-        height: 170px;
-        margin: 10px;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
         background-repeat: no-repeat;
         background-size: cover;
         border-radius: 10px;

@@ -86,6 +86,9 @@ export default {
   width: 100%;
   height: 85%;
   overflow: scroll;
+  .el-carousel {
+    height: 240px;
+  }
   .recommendName {
     height: 20px;
   }
