@@ -106,6 +106,7 @@ export default {
 .progress-bar-wrap {
   margin: 0 10px;
   padding: 8px;
+  position: absolute;
   .progress-bar {
     background-color: #ebebeb;
     width: 100%;

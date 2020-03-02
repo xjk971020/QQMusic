@@ -517,9 +517,11 @@ export default {
     z-index: 999;
     .play-config {
       position: absolute;
-      top: 27px;
       left: 40%;
-      height: 100%;
+      height: 90%;
+      bottom: 0;
+      display: flex;
+      align-items: center;
     }
     .play-song {
       margin-left: 4px;
@@ -529,8 +531,6 @@ export default {
       border-radius: 50%;
       height: 35px !important;
       width: 35px !important;
-      position: relative;
-      top: -6px;
       line-height: 35px;
       text-align: center;
       cursor: pointer;
@@ -549,8 +549,6 @@ export default {
     }
     .prev-song,
     .next-song {
-      position: relative;
-      top: -4px;
       width: 30px;
       height: 30px;
       line-height: 30px;
@@ -562,8 +560,6 @@ export default {
       }
     }
     .play-mode {
-      position: relative;
-      left: -10px;
       width: 25px;
       height: 25px;
       line-height: 25px;
@@ -590,11 +586,12 @@ export default {
     }
 
     .play-intro {
-      height: 100%;
-      padding-left: $module-padding;
-      padding-right: $module-padding;
-      padding-top: 5px;
-      padding-bottom: 25px;
+      height: 90%;
+      display: flex;
+      align-items: center;
+      position: absolute;
+      left: 2%;
+      bottom: 0;
       .thrum {
         width: 36px;
         height: 36px;
